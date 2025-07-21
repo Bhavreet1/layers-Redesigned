@@ -5,7 +5,7 @@ import Preloader from "./pages/home/preLoader/Preloader";
 import MainRoutes from "./routes/MainRoutes";
 
 const App = () => {
-  const [showPreloader, setShowPreloader] = useState(false);
+  const [showPreloader, setShowPreloader] = useState(true);
 
   const handlePreloaderFinish = () => {
     setShowPreloader(false);
