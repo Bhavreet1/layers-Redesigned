@@ -1,0 +1,183 @@
+/* Carousel Container */
+.carousel-container {
+  width: 100%;
+  max-width: 100vw;
+  padding: 0 1rem;
+  margin-top: 6rem;
+}
+
+/* Swiper Wrapper */
+.hero-swiper {
+  width: 100%;
+  height: 200px; /* Mobile height */
+  border-radius: 1.5rem;
+  overflow: hidden;
+  box-shadow: none;
+}
+
+/* Swiper Slides */
+.hero-swiper .swiper-slide {
+  text-align: center;
+  background: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.3s ease;
+  border-radius: 1.5rem;
+  overflow: hidden;
+}
+
+/* Custom Cursor for Swiper */
+.custom-cursor-swiper {
+  cursor: url("/cursor.png"), auto;
+}
+
+.custom-cursor-swiper .swiper-slide {
+  cursor: url("/cursor.png"), auto;
+}
+
+.custom-cursor-swiper .swiper-slide:hover {
+  cursor: url("/cursor.png"), pointer;
+}
+
+/* Custom cursor for pagination bullets */
+.custom-cursor-swiper .swiper-pagination-bullet {
+  cursor: url("/cursor.png"), pointer;
+}
+
+/* Carousel Images */
+.carousel-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 1.5rem;
+  background-color: white;
+}
+
+/* Slide Size Classes */
+.slide-large {
+  object-fit: contain;
+  background-color: black;
+}
+
+.slide-medium {
+  object-fit: cover;
+}
+.carousel-image2 {
+  background-color: white;
+}
+/* Pagination Styling */
+.hero-swiper .swiper-pagination {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.hero-swiper .swiper-pagination-bullet {
+  width: 12px;
+  height: 12px;
+  background: rgba(255, 255, 255, 0.5);
+  opacity: 1;
+  transition: all 0.3s ease;
+}
+
+.hero-swiper .swiper-pagination-bullet-active {
+  background: white;
+  transform: scale(1.2);
+}
+
+/* Responsive Breakpoints */
+
+/* Small Mobile (320px - 479px) */
+@media (max-width: 479px) {
+  .carousel-container {
+    padding: 0 0.5rem;
+  }
+
+  .hero-swiper {
+    height: 20rem;
+    border-radius: 1rem;
+  }
+  .carousel-image3,
+  .carousel-image4 {
+    transform: scale(1.3);
+  }
+}
+
+/* Mobile (480px - 767px) */
+/* Mobile (480px - 767px) */
+@media (min-width: 480px) and (max-width: 767px) {
+  .hero-swiper {
+    height: 20rem;
+  }
+}
+
+/* Tablet (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .hero-swiper {
+    height: 30rem;
+  }
+
+  .carousel-container {
+    padding: 0 1.5rem;
+  }
+}
+
+/* Small Laptop (1024px - 1199px) */
+@media (min-width: 1024px) and (max-width: 1199px) {
+  .hero-swiper {
+    height: 35rem;
+  }
+
+  .carousel-container {
+    padding: 0 2rem;
+  }
+}
+
+/* Large Laptop (1200px - 1399px) */
+@media (min-width: 1200px) and (max-width: 1399px) {
+  .hero-swiper {
+    height: 36rem;
+  }
+
+  .carousel-container {
+    padding: 0 2.5rem;
+  }
+}
+
+/* Desktop (1400px and up) */
+@media (min-width: 1400px) {
+  .hero-swiper {
+    height: 38rem;
+  }
+
+  .carousel-container {
+    padding: 0 3rem;
+    max-width: 1800px;
+  }
+}
+
+/* Ultra-wide screens */
+@media (min-width: 1920px) {
+  .hero-swiper {
+    height: 450px;
+  }
+}
+
+/* Hover effects for desktop */
+@media (hover: hover) {
+  .hero-swiper .swiper-pagination-bullet:hover {
+    background: #2a5ddb;
+
+    transform: scale(1.1);
+  }
+}
+
+/* High DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .carousel-image {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+}

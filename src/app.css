@@ -1,0 +1,39 @@
+@import "tailwindcss";
+:root {
+  --primary-color: #2a5ddb;
+}
+
+@font-face {
+  font-family: Aeonic;
+  font-weight: 900;
+  src: url(/font/fonnts.com-Aeonik-Bold.ttf);
+}
+@font-face {
+  font-family: Aeonic;
+  font-weight: 500;
+  src: url(/font/fonnts.com-Aeonik-Regular.ttf);
+}
+@font-face {
+  font-family: Zumme;
+  font-weight: 400;
+  font-style: normal;
+  src: url(/font/fontspring-demo-zuumerough-regular.otf);
+}
+@font-face {
+  font-family: Zumme;
+  font-weight: 400;
+  font-style: italic;
+  src: url(/font/fontspring-demo-zuumerough-italic.otf);
+}
+@font-face {
+  font-family: Zumme;
+  font-weight: 700;
+  font-style: normal;
+  src: url(/font/fontspring-demo-zuumerough-bold.otf);
+}
+@font-face {
+  font-family: Zumme;
+  font-weight: 700;
+  font-style: italic;
+  src: url(/font/fontspring-demo-zuumerough-bolditalic.otf);
+}
