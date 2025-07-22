@@ -5,12 +5,13 @@ import Carousel from "./Carousel/Carousel";
 import "./home.css";
 import Section3 from "./section-3/Section3";
 import Testimonials from "./testimonials/Testimonials";
+import Cofounder from "./section-5/Cofounder";
 
 // Enhanced Video Section Component
 const VideoSection = () => {
   const videoSectionRef = useRef(null);
   const videoRef = useRef(null);
-  const isInView = useInView(videoSectionRef, { once: false, amount: 0.3 });
+  const isInView = useInView(videoSectionRef, { once: false, amount: 0.6 });
 
   return (
     <section
@@ -22,18 +23,22 @@ const VideoSection = () => {
         {/* Morphing blob background */}
         <motion.div
           className="absolute top-0 left-0 w-full h-full opacity-10"
-          animate={isInView ? {
-            background: [
-              "radial-gradient(circle at 20% 30%, #3b82f6 0%, transparent 50%)",
-              "radial-gradient(circle at 80% 70%, #1d4ed8 0%, transparent 60%)",
-              "radial-gradient(circle at 50% 20%, #2563eb 0%, transparent 40%)",
-              "radial-gradient(circle at 20% 30%, #3b82f6 0%, transparent 50%)"
-            ]
-          } : {}}
+          animate={
+            isInView
+              ? {
+                  background: [
+                    "radial-gradient(circle at 20% 30%, #3b82f6 0%, transparent 50%)",
+                    "radial-gradient(circle at 80% 70%, #1d4ed8 0%, transparent 60%)",
+                    "radial-gradient(circle at 50% 20%, #2563eb 0%, transparent 40%)",
+                    "radial-gradient(circle at 20% 30%, #3b82f6 0%, transparent 50%)",
+                  ],
+                }
+              : {}
+          }
           transition={{
             duration: 8,
             repeat: Infinity,
-            ease: "easeInOut"
+            ease: "easeInOut",
           }}
         />
 
@@ -46,17 +51,21 @@ const VideoSection = () => {
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
             }}
-            animate={isInView ? {
-              y: [0, -30, 0],
-              x: [0, Math.random() * 20 - 10, 0],
-              opacity: [0.3, 0.8, 0.3],
-              scale: [1, 1.5, 1],
-            } : {}}
+            animate={
+              isInView
+                ? {
+                    y: [0, -30, 0],
+                    x: [0, Math.random() * 20 - 10, 0],
+                    opacity: [0.3, 0.8, 0.3],
+                    scale: [1, 1.5, 1],
+                  }
+                : {}
+            }
             transition={{
               duration: 3 + Math.random() * 2,
               repeat: Infinity,
               delay: Math.random() * 2,
-              ease: "easeInOut"
+              ease: "easeInOut",
             }}
           />
         ))}
@@ -64,43 +73,67 @@ const VideoSection = () => {
         {/* Enhanced geometric shapes */}
         <motion.div
           className="absolute top-20 left-10 w-32 h-32 border-2 border-blue-600/30 rounded-full"
-          animate={isInView ? {
-            rotate: 360,
-            scale: [1, 1.2, 1],
-            borderColor: ["rgba(59, 130, 246, 0.3)", "rgba(29, 78, 216, 0.6)", "rgba(59, 130, 246, 0.3)"]
-          } : {}}
+          animate={
+            isInView
+              ? {
+                  rotate: 360,
+                  scale: [1, 1.2, 1],
+                  borderColor: [
+                    "rgba(59, 130, 246, 0.3)",
+                    "rgba(29, 78, 216, 0.6)",
+                    "rgba(59, 130, 246, 0.3)",
+                  ],
+                }
+              : {}
+          }
           transition={{
             rotate: { duration: 20, repeat: Infinity, ease: "linear" },
             scale: { duration: 4, repeat: Infinity, ease: "easeInOut" },
-            borderColor: { duration: 3, repeat: Infinity, ease: "easeInOut" }
+            borderColor: { duration: 3, repeat: Infinity, ease: "easeInOut" },
           }}
         />
 
         <motion.div
           className="absolute top-40 right-20 w-24 h-24 bg-blue-600/20 rounded-lg"
-          animate={isInView ? {
-            rotate: -360,
-            y: [-10, 10, -10],
-            backgroundColor: ["rgba(59, 130, 246, 0.2)", "rgba(29, 78, 216, 0.4)", "rgba(59, 130, 246, 0.2)"]
-          } : {}}
+          animate={
+            isInView
+              ? {
+                  rotate: -360,
+                  y: [-10, 10, -10],
+                  backgroundColor: [
+                    "rgba(59, 130, 246, 0.2)",
+                    "rgba(29, 78, 216, 0.4)",
+                    "rgba(59, 130, 246, 0.2)",
+                  ],
+                }
+              : {}
+          }
           transition={{
             rotate: { duration: 15, repeat: Infinity, ease: "linear" },
             y: { duration: 3, repeat: Infinity, ease: "easeInOut" },
-            backgroundColor: { duration: 2.5, repeat: Infinity, ease: "easeInOut" }
+            backgroundColor: {
+              duration: 2.5,
+              repeat: Infinity,
+              ease: "easeInOut",
+            },
           }}
         />
 
         <motion.div
           className="absolute bottom-32 left-1/4 w-16 h-16 border-2 border-blue-400/50 rotate-45"
-          animate={isInView ? {
-            rotate: [45, 405],
-            opacity: [0.4, 0.8, 0.4],
-            scale: [1, 1.3, 1],
-          } : {}}
+          animate={
+            isInView
+              ? {
+                  rotate: [45, 405],
+                  opacity: [0.4, 0.8, 0.4],
+                  scale: [1, 1.3, 1],
+                }
+              : {}
+          }
           transition={{
             rotate: { duration: 12, repeat: Infinity, ease: "linear" },
             opacity: { duration: 2, repeat: Infinity, ease: "easeInOut" },
-            scale: { duration: 4, repeat: Infinity, ease: "easeInOut" }
+            scale: { duration: 4, repeat: Infinity, ease: "easeInOut" },
           }}
         />
 
@@ -108,38 +141,46 @@ const VideoSection = () => {
         <motion.div
           className="absolute top-1/2 left-1/4 w-20 h-20 border border-blue-500/40"
           style={{
-            clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)"
+            clipPath:
+              "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)",
           }}
-          animate={isInView ? {
-            rotate: [0, 120, 240, 360],
-            scale: [1, 1.4, 0.8, 1],
-            opacity: [0.4, 0.8, 0.2, 0.4],
-          } : {}}
+          animate={
+            isInView
+              ? {
+                  rotate: [0, 120, 240, 360],
+                  scale: [1, 1.4, 0.8, 1],
+                  opacity: [0.4, 0.8, 0.2, 0.4],
+                }
+              : {}
+          }
           transition={{
             duration: 8,
             repeat: Infinity,
-            ease: "easeInOut"
+            ease: "easeInOut",
           }}
         />
 
         {/* Pulsing rings */}
         <motion.div
           className="absolute bottom-20 right-1/4 w-40 h-40 border border-blue-300/20 rounded-full"
-          animate={isInView ? {
-            scale: [1, 2, 1],
-            opacity: [0.5, 0, 0.5],
-          } : {}}
+          animate={
+            isInView
+              ? {
+                  scale: [1, 2, 1],
+                  opacity: [0.5, 0, 0.5],
+                }
+              : {}
+          }
           transition={{
             duration: 4,
             repeat: Infinity,
-            ease: "easeOut"
+            ease: "easeOut",
           }}
         />
       </div>
 
       {/* Main Content Container */}
       <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between min-h-screen px-6 lg:px-12 py-12">
-
         {/* Left Content */}
         <motion.div
           className="w-full lg:w-1/2 mb-12 lg:mb-0 lg:pr-12"
@@ -167,7 +208,8 @@ const VideoSection = () => {
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            Unmatched design and a functional crown with haptics that keeps up with you.
+            Unmatched design and a functional crown with haptics that keeps up
+            with you.
           </motion.p>
 
           {/* Feature Points */}
@@ -177,12 +219,18 @@ const VideoSection = () => {
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.8, delay: 0.6 }}
           >
-            {['Fitness, on point.', 'Seamless Performance', 'Infinite Possibilities'].map((feature, index) => (
+            {[
+              "Fitness, on point.",
+              "Seamless Performance",
+              "Infinite Possibilities",
+            ].map((feature, index) => (
               <motion.div
                 key={feature}
                 className="flex items-center space-x-3"
                 initial={{ opacity: 0, x: -20 }}
-                animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+                animate={
+                  isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }
+                }
                 transition={{ duration: 0.6, delay: 0.8 + index * 0.1 }}
               >
                 <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
@@ -203,7 +251,7 @@ const VideoSection = () => {
             <span className="relative z-10">Explore More</span>
             <motion.div
               className="absolute inset-0 bg-gradient-to-r from-blue-500 to-blue-700"
-              initial={{ x: '-100%' }}
+              initial={{ x: "-100%" }}
               whileHover={{ x: 0 }}
               transition={{ duration: 0.3 }}
             />
@@ -222,26 +270,34 @@ const VideoSection = () => {
             {/* Decorative Frame */}
             <motion.div
               className="absolute -inset-4 bg-gradient-to-r from-blue-100 via-blue-200 to-blue-200 rounded-2xl shadow-2xl shadow-blue-900 opacity-75"
-              animate={isInView ? {
-                rotate: [0, 1, -1, 0],
-                scale: [1, 1.02, 1],
-              } : {}}
+              animate={
+                isInView
+                  ? {
+                      rotate: [0, 1, -1, 0],
+                      scale: [1, 1.02, 1],
+                    }
+                  : {}
+              }
               transition={{
                 rotate: { duration: 6, repeat: Infinity, ease: "easeInOut" },
-                scale: { duration: 4, repeat: Infinity, ease: "easeInOut" }
+                scale: { duration: 4, repeat: Infinity, ease: "easeInOut" },
               }}
             />
 
             {/* Glowing Border Effect */}
             <motion.div
               className="absolute -inset-2 bg-gradient-to-r from-blue-400 to-blue-600 rounded-xl opacity-50 blur-sm"
-              animate={isInView ? {
-                opacity: [0.3, 0.7, 0.3],
-              } : {}}
+              animate={
+                isInView
+                  ? {
+                      opacity: [0.3, 0.7, 0.3],
+                    }
+                  : {}
+              }
               transition={{
                 duration: 3,
                 repeat: Infinity,
-                ease: "easeInOut"
+                ease: "easeInOut",
               }}
             />
 
@@ -270,7 +326,11 @@ const VideoSection = () => {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
               >
-                <svg className="w-6 h-6 text-white ml-1" fill="currentColor" viewBox="0 0 20 20">
+                <svg
+                  className="w-6 h-6 text-white ml-1"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
                   <path d="M8 5v10l8-5-8-5z" />
                 </svg>
               </motion.div>
@@ -307,7 +367,6 @@ const VideoSection = () => {
           </motion.div>
         </motion.div>
       </div>
-
     </section>
   );
 };
@@ -325,44 +384,46 @@ const LayersTextReveal = () => {
 
   // Create opacity transforms for each word based on scroll progress - Fixed timing
   const wordOpacities = words.map((_, index) => {
-    const start = (index * 0.12) + 0.05; // Better spacing
+    const start = index * 0.12 + 0.05; // Better spacing
     const end = start + 0.12; // Adequate reveal duration
     return useTransform(scrollYProgress, [start, end, 1], [0, 1, 1]);
   });
 
   // Create scale transforms for dramatic effect
   const wordScales = words.map((_, index) => {
-    const start = (index * 0.12) + 0.05;
+    const start = index * 0.12 + 0.05;
     const end = start + 0.12;
     return useTransform(scrollYProgress, [start, end], [0.5, 1]);
   });
 
   // Create blur transforms for smooth reveal
   const wordBlurs = words.map((_, index) => {
-    const start = (index * 0.12) + 0.05;
+    const start = index * 0.12 + 0.05;
     const end = start + 0.12;
     return useTransform(scrollYProgress, [start, end], [10, 0]);
   });
 
   // Create dynamic glow effect that moves from word to word
   const wordGlows = words.map((_, index) => {
-    const start = (index * 0.12) + 0.05;
+    const start = index * 0.12 + 0.05;
     const end = start + 0.15;
-    const nextStart = ((index + 1) * 0.12) + 0.05;
+    const nextStart = (index + 1) * 0.12 + 0.05;
     return useTransform(
       scrollYProgress,
       [start, end, Math.min(nextStart, 0.8)],
-      ["0 0 30px rgba(255,255,255,0.3)", "0 0 60px rgba(59,130,246,0.8)", "0 0 30px rgba(255,255,255,0.3)"]
+      [
+        "0 0 30px rgba(255,255,255,0.3)",
+        "0 0 60px rgba(59,130,246,0.8)",
+        "0 0 30px rgba(255,255,255,0.3)",
+      ]
     );
   });
-
-
 
   return (
     <section
       ref={textRevealRef}
       className="relative w-full h-[300vh] bg-navy-900"
-      style={{ backgroundColor: '#1e293b' }} // navy blue background
+      style={{ backgroundColor: "#1e293b" }} // navy blue background
     >
       {/* Sticky container for text */}
       <div className="sticky top-0 w-full h-screen flex items-center justify-center overflow-hidden">
@@ -377,9 +438,9 @@ const LayersTextReveal = () => {
                 "linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%)",
                 "linear-gradient(135deg, #1e293b 0%, #1e3a8a 30%, #0f172a 100%)",
                 "linear-gradient(135deg, #1e3a8a 0%, #3730a3 40%, #1e293b 100%)",
-                "linear-gradient(135deg, #3730a3 0%, #1d4ed8 50%, #1e3a8a 100%)"
+                "linear-gradient(135deg, #3730a3 0%, #1d4ed8 50%, #1e3a8a 100%)",
               ]
-            )
+            ),
           }}
         />
 
@@ -417,7 +478,7 @@ const LayersTextReveal = () => {
                 duration: 4 + Math.random() * 3,
                 repeat: Infinity,
                 delay: Math.random() * 3,
-                ease: "easeInOut"
+                ease: "easeInOut",
               }}
             />
           ))}
@@ -432,9 +493,9 @@ const LayersTextReveal = () => {
                 [
                   "radial-gradient(ellipse at 10% 20%, #3b82f6 0%, transparent 70%)",
                   "radial-gradient(ellipse at 90% 80%, #1d4ed8 0%, transparent 60%)",
-                  "radial-gradient(ellipse at 50% 50%, #2563eb 0%, transparent 80%)"
+                  "radial-gradient(ellipse at 50% 50%, #2563eb 0%, transparent 80%)",
                 ]
-              )
+              ),
             }}
           />
 
@@ -444,12 +505,16 @@ const LayersTextReveal = () => {
             animate={{
               rotate: 360,
               scale: [1, 1.1, 1],
-              borderColor: ["rgba(255,255,255,0.1)", "rgba(59,130,246,0.3)", "rgba(255,255,255,0.1)"]
+              borderColor: [
+                "rgba(255,255,255,0.1)",
+                "rgba(59,130,246,0.3)",
+                "rgba(255,255,255,0.1)",
+              ],
             }}
             transition={{
               rotate: { duration: 30, repeat: Infinity, ease: "linear" },
               scale: { duration: 8, repeat: Infinity, ease: "easeInOut" },
-              borderColor: { duration: 5, repeat: Infinity, ease: "easeInOut" }
+              borderColor: { duration: 5, repeat: Infinity, ease: "easeInOut" },
             }}
           />
 
@@ -465,8 +530,12 @@ const LayersTextReveal = () => {
             transition={{
               rotate: { duration: 25, repeat: Infinity, ease: "linear" },
               opacity: { duration: 6, repeat: Infinity, ease: "easeInOut" },
-              borderRadius: { duration: 8, repeat: Infinity, ease: "easeInOut" },
-              scale: { duration: 4, repeat: Infinity, ease: "easeInOut" }
+              borderRadius: {
+                duration: 8,
+                repeat: Infinity,
+                ease: "easeInOut",
+              },
+              scale: { duration: 4, repeat: Infinity, ease: "easeInOut" },
             }}
           />
 
@@ -474,19 +543,24 @@ const LayersTextReveal = () => {
           <motion.div
             className="absolute top-1/3 right-20 w-40 h-40 border border-white/8"
             style={{
-              clipPath: "polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%)"
+              clipPath:
+                "polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%)",
             }}
             animate={{
               rotate: [0, 360],
               scale: [1, 1.15, 1],
               opacity: [0.1, 0.4, 0.1],
-              borderColor: ["rgba(255,255,255,0.08)", "rgba(59,130,246,0.2)", "rgba(255,255,255,0.08)"]
+              borderColor: [
+                "rgba(255,255,255,0.08)",
+                "rgba(59,130,246,0.2)",
+                "rgba(255,255,255,0.08)",
+              ],
             }}
             transition={{
               rotate: { duration: 35, repeat: Infinity, ease: "linear" },
               scale: { duration: 10, repeat: Infinity, ease: "easeInOut" },
               opacity: { duration: 8, repeat: Infinity, ease: "easeInOut" },
-              borderColor: { duration: 6, repeat: Infinity, ease: "easeInOut" }
+              borderColor: { duration: 6, repeat: Infinity, ease: "easeInOut" },
             }}
           />
 
@@ -497,13 +571,21 @@ const LayersTextReveal = () => {
               y: [-20, 20, -20],
               x: [-10, 10, -10],
               rotate: [0, 90, 180, 270, 360],
-              backgroundColor: ["rgba(255,255,255,0.05)", "rgba(59,130,246,0.1)", "rgba(255,255,255,0.05)"]
+              backgroundColor: [
+                "rgba(255,255,255,0.05)",
+                "rgba(59,130,246,0.1)",
+                "rgba(255,255,255,0.05)",
+              ],
             }}
             transition={{
               y: { duration: 12, repeat: Infinity, ease: "easeInOut" },
               x: { duration: 12, repeat: Infinity, ease: "easeInOut" },
               rotate: { duration: 20, repeat: Infinity, ease: "linear" },
-              backgroundColor: { duration: 8, repeat: Infinity, ease: "easeInOut" }
+              backgroundColor: {
+                duration: 8,
+                repeat: Infinity,
+                ease: "easeInOut",
+              },
             }}
           />
 
@@ -511,7 +593,8 @@ const LayersTextReveal = () => {
           <motion.div
             className="absolute top-16 right-1/4 w-24 h-24 border-2 border-white/6"
             style={{
-              clipPath: "polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%)"
+              clipPath:
+                "polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%)",
             }}
             animate={{
               rotate: [-360, 0],
@@ -523,7 +606,7 @@ const LayersTextReveal = () => {
               rotate: { duration: 28, repeat: Infinity, ease: "linear" },
               y: { duration: 6, repeat: Infinity, ease: "easeInOut" },
               opacity: { duration: 4, repeat: Infinity, ease: "easeInOut" },
-              scale: { duration: 5, repeat: Infinity, ease: "easeInOut" }
+              scale: { duration: 5, repeat: Infinity, ease: "easeInOut" },
             }}
           />
 
@@ -540,7 +623,11 @@ const LayersTextReveal = () => {
               rotate: { duration: 22, repeat: Infinity, ease: "linear" },
               scale: { duration: 7, repeat: Infinity, ease: "easeInOut" },
               x: { duration: 14, repeat: Infinity, ease: "easeInOut" },
-              borderRadius: { duration: 10, repeat: Infinity, ease: "easeInOut" }
+              borderRadius: {
+                duration: 10,
+                repeat: Infinity,
+                ease: "easeInOut",
+              },
             }}
           />
 
@@ -557,7 +644,7 @@ const LayersTextReveal = () => {
               rotate: { duration: 15, repeat: Infinity, ease: "linear" },
               scale: { duration: 6, repeat: Infinity, ease: "easeInOut" },
               opacity: { duration: 3, repeat: Infinity, ease: "easeInOut" },
-              y: { duration: 8, repeat: Infinity, ease: "easeInOut" }
+              y: { duration: 8, repeat: Infinity, ease: "easeInOut" },
             }}
           />
 
@@ -565,7 +652,7 @@ const LayersTextReveal = () => {
           <motion.div
             className="absolute top-1/4 left-3/4 w-12 h-12 border border-white/15"
             style={{
-              clipPath: "polygon(50% 0%, 0% 100%, 100% 100%)"
+              clipPath: "polygon(50% 0%, 0% 100%, 100% 100%)",
             }}
             animate={{
               rotate: [0, 360],
@@ -577,7 +664,7 @@ const LayersTextReveal = () => {
               rotate: { duration: 20, repeat: Infinity, ease: "linear" },
               scale: { duration: 7, repeat: Infinity, ease: "easeInOut" },
               opacity: { duration: 4, repeat: Infinity, ease: "easeInOut" },
-              x: { duration: 12, repeat: Infinity, ease: "easeInOut" }
+              x: { duration: 12, repeat: Infinity, ease: "easeInOut" },
             }}
           />
         </div>
@@ -611,8 +698,9 @@ const LayersTextReveal = () => {
               y: useTransform(scrollYProgress, [0.5, 0.7], [30, 0]),
             }}
           >
-            Crafted with precision, designed for perfection. Every detail matters in creating
-            the ultimate user experience that transcends ordinary boundaries.
+            Crafted with precision, designed for perfection. Every detail
+            matters in creating the ultimate user experience that transcends
+            ordinary boundaries.
           </motion.p>
 
           {/* Decorative line that grows */}
@@ -648,7 +736,11 @@ const LayersTextReveal = () => {
         <motion.div
           className="absolute bottom-16 right-8 text-white/50 text-sm"
           style={{
-            opacity: useTransform(scrollYProgress, [0, 0.1, 0.9, 1], [1, 0, 0, 1]),
+            opacity: useTransform(
+              scrollYProgress,
+              [0, 0.1, 0.9, 1],
+              [1, 0, 0, 1]
+            ),
           }}
         >
           <div className="flex items-center space-x-2">
@@ -668,7 +760,6 @@ const LayersTextReveal = () => {
 
 // Enhanced Product Showcase Section Component
 
-
 const Home = () => {
   const scrollTriggerRef = useRef(null);
   const { scrollYProgress } = useScroll({
@@ -681,7 +772,7 @@ const Home = () => {
   const leftX = useTransform(
     scrollYProgress,
     [0, 0.25, 0.5, 0.75],
-    ["-50vw", "0vw", "0vw", "0vw"]
+    ["-30vw", "0vw", "0vw", "0vw"]
   );
   const leftOpacity = useTransform(
     scrollYProgress,
@@ -695,7 +786,7 @@ const Home = () => {
   const rightX = useTransform(
     scrollYProgress,
     [0.1, 0.35, 0.5, 0.75],
-    ["50vw", "0vw", "0vw", "0vw"]
+    ["30vw", "0vw", "0vw", "0vw"]
   );
   const rightY = useTransform(scrollYProgress, [0.5, 0.75], ["0vh", "-50vh"]);
   const rightOpacity = useTransform(
@@ -736,11 +827,14 @@ const Home = () => {
   const textRotate = useTransform(scrollYProgress, [0.5, 0.75], [0, 360]);
 
   return (
-    <div className="home w-full">
+    <div className="home relative w-full">
       {/* Carousel Section */}
-      <Carousel />
+      <div className="bg-white">
+        <Carousel />
+      </div>
+
       {/* arrow down with scrolling chaos background */}
-      <section className="relative flex h-25 mt-6 ">
+      <section className="relative flex h-25 mt-6 bg-white">
         {/* Scrolling Chaos Background Text */}
         <div className="absolute inset-0 flex items-center overflow-hidden">
           <motion.div
@@ -778,7 +872,6 @@ const Home = () => {
           </svg>
         </div>
       </section>
-
 
       {/* Transparent Scroll Trigger - 400vh height for stronger scroll tracking */}
       {/* section 2 */}
@@ -840,47 +933,32 @@ const Home = () => {
       </section>
 
       {/*section 2 - Video Section */}
-      <div className="p-6">
+      <div className="p-6 bg-white">
         <VideoSection />
       </div>
 
       {/* section - 3 Layer's Skin Text Reveal Section */}
-      <LayersTextReveal />
+      <div className="bg-white">
+        <LayersTextReveal />
+      </div>
+
       {/* section - 3 content - Enhanced Product Showcase */}
-      <Section3 />
+      <div className="bg-white">
+        <Section3 />
+      </div>
 
       {/*section 4- testimonals */}
-      <Testimonials />
+      <div className="bg-white">
+        <Testimonials />
+      </div>
 
       {/* section - 5 cofounder */}
-      <section className="co-founder flex flex-col md:flex-row w-full h-screen">
-        <div className="left w-full md:w-1/2 h-full p-3 md:p-20 relative">
-          {/* Small floating particles around the image */}
-          <div className="floating-element floating-particle" style={{ top: '10%', left: '3%', animationDelay: '0s' }}></div>
-          <div className="floating-element floating-particle" style={{ top: '25%', left: '1%', animationDelay: '2s' }}></div>
-          <div className="floating-element floating-particle" style={{ top: '40%', left: '6%', animationDelay: '4s' }}></div>
-          <div className="floating-element floating-particle" style={{ top: '60%', left: '2%', animationDelay: '1s' }}></div>
-          <div className="floating-element floating-particle" style={{ top: '80%', left: '5%', animationDelay: '3s' }}></div>
-          <div className="floating-element floating-particle" style={{ top: '15%', right: '4%', animationDelay: '1.5s' }}></div>
-          <div className="floating-element floating-particle" style={{ top: '35%', right: '2%', animationDelay: '3.5s' }}></div>
-          <div className="floating-element floating-particle" style={{ top: '55%', right: '7%', animationDelay: '0.5s' }}></div>
-          <div className="floating-element floating-particle" style={{ top: '75%', right: '3%', animationDelay: '2.5s' }}></div>
+      <div className="bg-white">
+        <Cofounder />
+      </div>
 
-          {/* Bigger floating elements for visual hierarchy */}
-          <div className="floating-element floating-ring" style={{ top: '5%', left: '8%', animationDelay: '1s' }}></div>
-          <div className="floating-element floating-square" style={{ top: '85%', right: '10%', animationDelay: '2.5s' }}></div>
-          <div className="floating-element floating-diamond" style={{ top: '30%', right: '9%', animationDelay: '4s' }}></div>
-
-          <div className="founders-image-container">
-            <img draggable={false} src="./founders_2.webp" className="inverted-radius  object-cover w-full h-full" alt="co-founders" />
-          </div>
-        </div>
-        <div className="right w-1/2 h-full md:p-20">
-          <div className="inverted-radius w-full h-full bg-[#2a5ddb] rounded-4xl ">
-
-          </div>
-        </div>
-      </section>
+      {/* Footer spacer - 100vh transparent div to reveal footer */}
+      <div className="w-full h-screen bg-transparent relative z-0"></div>
     </div>
   );
 };

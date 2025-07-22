@@ -3,6 +3,7 @@ import "./app.css";
 import NavBar from "./components/NavBar";
 import Preloader from "./pages/home/preLoader/Preloader";
 import MainRoutes from "./routes/MainRoutes";
+import Footer from "./components/Footer";
 
 const App = () => {
   const [showPreloader, setShowPreloader] = useState(false);
@@ -21,6 +22,7 @@ const App = () => {
       <div className="mt-20">
         <MainRoutes />
       </div>
+      <Footer/>
     </div>
   );
 };

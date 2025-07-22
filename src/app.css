@@ -37,3 +37,9 @@
   font-style: italic;
   src: url(/font/fontspring-demo-zuumerough-bolditalic.otf);
 }
+@font-face {
+  font-family: League;
+  font-weight: 700;
+  font-style: italic;
+  src: url(/font/LeagueScript-Regular.ttf);
+}
