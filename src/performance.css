@@ -1,0 +1,41 @@
+/* Performance optimizations */
+* {
+  will-change: auto;
+}
+
+/* Optimize animations */
+.motion-element {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Reduce paint operations */
+img {
+  image-rendering: optimizeQuality;
+  transform: translateZ(0);
+}
+
+/* Optimize scroll performance */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Reduce layout thrashing */
+.co-founder {
+  contain: layout style paint;
+}
+
+/* GPU acceleration for animations */
+[data-motion-component] {
+  transform: translateZ(0);
+  will-change: transform, opacity;
+}
+
+/* Optimize text rendering */
+.font-\[zumme\],
+.font-\[aeonic\],
+.font-\[league\] {
+  text-rendering: optimizeLegibility;
+  font-display: swap;
+}

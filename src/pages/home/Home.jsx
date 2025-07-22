@@ -16,7 +16,7 @@ const VideoSection = () => {
   return (
     <section
       ref={videoSectionRef}
-      className="relative w-full min-h-screen bg-gradient-to-br from-slate-200 via-blue-200 to-slate-300 overflow-hidden rounded-[4rem]"
+      className="relative w-full min-h-screen bg-gradient-to-br from-slate-200 via-blue-200 to-slate-300 overflow-hidden rounded-[1.5rem] md:rounded-[4rem]"
     >
       {/* Enhanced Animated Background Elements */}
       <div className="absolute inset-0">
@@ -936,7 +936,7 @@ const Home = () => {
       </section>
 
       {/*section 2 - anarc Video Section */}
-      <div className="p-6 bg-white">
+      <div className=" p-2 pb-10 md:p-6 md:pb-10   bg-white">
         <VideoSection />
       </div>
 
@@ -956,7 +956,7 @@ const Home = () => {
       </div>
 
       {/* section - 5 cofounder */}
-      <div className="bg-white">
+      <div className="">
         <Cofounder />
       </div>
       

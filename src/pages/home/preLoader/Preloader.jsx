@@ -144,7 +144,7 @@ const Preloader = ({ onFinish = () => { } }) => {
                                 }}
                                 className="text-sm text-blue-400 font-medium tracking-wider"
                             >
-                                Click to continue
+                                Click Chaos
                             </motion.span>
 
                         </motion.div>
