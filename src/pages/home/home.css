@@ -157,7 +157,7 @@
   width: 3px;
   height: 15%;
   background: rgba(59, 130, 246, 0.5);
-  
+
   animation: float-bounce 6s ease-in-out infinite alternate;
 }
 
@@ -235,12 +235,168 @@
 }
 
 @keyframes float-bounce {
-  0%{
+  0% {
     transform: translateY(9rem);
     opacity: 0.5;
   }
   100% {
-    transform:  translateY(-5px);
+    transform: translateY(-5px);
     opacity: 0.6;
+  }
+}
+/* Slow scroll effect for Cofounder section  */
+.co-founder {
+  scroll-behavior: smooth;
+  will-change: transform;
+}
+
+.co-founder * {
+  will-change: transform;
+}
+
+/* Enhanced smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Slow down scroll speed using CSS */
+@media (prefers-reduced-motion: no-preference) {
+  .co-founder {
+    scroll-snap-type: y mandatory;
+    scroll-padding-top: 2rem;
+  }
+}
+
+/* Custom easing for smoother animations */
+.motion-slow {
+  transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition-duration: 1.2s;
+}
+/* Sticky section effect for 2-second delay */
+.sticky-section {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 10 !important;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.sticky-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #2a5ddb, transparent);
+  animation: stickyGlow 2s ease-in-out;
+}
+
+@keyframes stickyGlow {
+  0%,
+  100% {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  50% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
+/* Smooth scroll behavior override for sticky effect */
+.co-founder.sticky-section {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+/* Add a subtle backdrop blur when sticky */
+.sticky-section {
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.95) !important;
+}
+/* Cofounder section sticky effect - stays for 2 seconds */
+.co-founder {
+  scroll-behavior: smooth;
+  will-change: transform;
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
+  position: relative !important;
+  transform: translateZ(0); /* Force hardware acceleration */
+}
+
+.co-founder * {
+  will-change: transform;
+}
+
+/* Sticky section styles */
+.sticky-section {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 10 !important;
+  transition: all 0.3s ease-out;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  background: white;
+}
+
+/* Parent container for scroll snap */
+.home {
+  scroll-snap-type: y proximity;
+  position: relative;
+  transform: translateZ(0); /* Force hardware acceleration */
+}
+
+/* Scroll snap for cofounder section */
+@media (prefers-reduced-motion: no-preference) {
+  .co-founder {
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
+    scroll-margin-top: 2rem;
+  }
+}
+
+/* Custom easing for smoother animations */
+.motion-slow {
+  transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transition-duration: 1.2s;
+}
+
+/* Smooth transition when becoming sticky */
+.sticky-section {
+  animation: stickyFadeIn 0.3s ease-out;
+}
+
+@keyframes stickyFadeIn {
+  from {
+    opacity: 0.9;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Enhanced scroll behavior for the entire page */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Scroll delay effect using CSS scroll-timeline (experimental) */
+@supports (scroll-timeline: works) {
+  .co-founder {
+    scroll-timeline: --cofounder-scroll;
+    animation: stickDelay 2s linear --cofounder-scroll;
+  }
+}
+
+@keyframes stickDelay {
+  0%,
+  50% {
+    position: sticky;
+    top: 0;
+  }
+  100% {
+    position: relative;
   }
 }

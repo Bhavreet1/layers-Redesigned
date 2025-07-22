@@ -43,3 +43,6 @@
   font-style: italic;
   src: url(/font/LeagueScript-Regular.ttf);
 }
+body{
+  background-color: white;
+}

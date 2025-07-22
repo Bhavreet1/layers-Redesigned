@@ -1,10 +1,16 @@
-import { motion, useMotionValue, useSpring, AnimatePresence } from "framer-motion";
+import {
+  motion,
+  useMotionValue,
+  useSpring,
+  AnimatePresence,
+} from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import { IoBagOutline } from "react-icons/io5";
 import { FaUser, FaBars } from "react-icons/fa6";
 import { FaTimes } from "react-icons/fa";
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink } from "react-router-dom";
 import "./navbar.css";
+import { link } from "motion/react-client";
 
 // Magnetic hover wrapper
 const MagneticLink = ({ children }) => {
@@ -109,24 +115,24 @@ const NavBar = () => {
   }, [lastScrollY]);
 
   const navItems = [
-    { name: "Anarc", dropdown: null },
+    { name: "Anarc", dropdown: null ,link:"/anarc" },
     {
       name: "Skins",
       dropdown: [
         { label: "Mobile Skins", link: "/skins/mobile" },
+        { label: "Ipad Skins", link: "/skins/ipad" },
         { label: "Laptop Skins", link: "/skins/laptop" },
+        { label: "Anarc Skins", link: "/accessories/skins" }
       ],
     },
     {
       name: "Accessories",
-      dropdown: [
-        { label: "Anarc Skins", link: "/accessories/skins" },
-        { label: "Anarc Charger", link: "/accessories/charger" },
-        { label: "Anarc Screen", link: "/accessories/screen" },
-        { label: "Anarc Strap", link: "/accessories/strap" },
-      ],
+      dropdown: null,
+      link: "/accessories"
     },
-    { name: "Our-Story", dropdown: null },
+    { name: "Our-Story", dropdown: null ,
+      link: "/our-story"
+    },
   ];
 
   return (
@@ -136,11 +142,11 @@ const NavBar = () => {
         initial={{ y: 0, opacity: 1 }}
         animate={{
           y: isVisible ? 0 : -100,
-          opacity: isVisible ? 1 : 0
+          opacity: isVisible ? 1 : 0,
         }}
         transition={{
           duration: 0.3,
-          ease: "easeInOut"
+          ease: "easeInOut",
         }}
       >
         <div className="flex flex-wrap items-center justify-between px-4 py-2">
@@ -164,7 +170,7 @@ const NavBar = () => {
 
           {/* Right Icons */}
           <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-            <div className="flex w-25 md:w-30 justify-evenly border-2 rounded border-blue-600/40 py-1">
+            <div className="flex w-25 bg-white/95 md:w-30 justify-evenly border-2 rounded-xl border-blue-600/40 py-1">
               <MagneticLink>
                 <IoBagOutline className="hover:bg-gray-300 rounded-2xl text-4xl ease duration-200 p-1" />
               </MagneticLink>
@@ -241,7 +247,9 @@ const NavBar = () => {
             >
               {/* Sidebar Header */}
               <div className="flex items-center justify-between p-6 border-b border-gray-200">
-                <h2 className="text-xl font-bold text-gray-800 font-[Aeonic]">Menu</h2>
+                <h2 className="text-xl font-bold text-gray-800 font-[Aeonic]">
+                  Menu
+                </h2>
                 <button
                   onClick={() => setIsMobileMenuOpen(false)}
                   className="p-2 rounded-full hover:bg-gray-200 transition-colors"
@@ -259,9 +267,10 @@ const NavBar = () => {
                         to={item.link || "#"}
                         onClick={() => setIsMobileMenuOpen(false)}
                         className={({ isActive }) =>
-                          `block text-lg font-semibold transition-colors duration-200 ${isActive
-                            ? "text-blue-600"
-                            : "text-gray-700 hover:text-blue-600"
+                          `block text-lg font-semibold transition-colors duration-200 ${
+                            isActive
+                              ? "text-blue-600"
+                              : "text-gray-700 hover:text-blue-600"
                           }`
                         }
                       >
@@ -292,7 +301,9 @@ const NavBar = () => {
                 <div className="mt-8 pt-6 border-t border-gray-200">
                   <div className="flex items-center space-x-3">
                     <FaUser className="text-2xl text-gray-600" />
-                    <span className="text-lg font-medium text-gray-700">Account</span>
+                    <span className="text-lg font-medium text-gray-700">
+                      Account
+                    </span>
                   </div>
                 </div>
               </div>

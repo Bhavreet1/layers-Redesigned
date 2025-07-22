@@ -6,7 +6,6 @@ import { AnimatePresence, motion } from "motion/react";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
-
 import "./carousel.css";
 
 const Carousel = () => {

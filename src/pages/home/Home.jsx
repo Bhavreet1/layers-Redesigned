@@ -11,7 +11,7 @@ import Cofounder from "./section-5/Cofounder";
 const VideoSection = () => {
   const videoSectionRef = useRef(null);
   const videoRef = useRef(null);
-  const isInView = useInView(videoSectionRef, { once: false, amount: 0.6 });
+  const isInView = useInView(videoSectionRef, { once: false, amount: 0.4 });
 
   return (
     <section
@@ -827,14 +827,17 @@ const Home = () => {
   const textRotate = useTransform(scrollYProgress, [0.5, 0.75], [0, 360]);
 
   return (
-    <div className="home relative w-full">
+    <div
+      className="home relative w-full"
+      style={{ scrollSnapType: "y proximity" }}
+    >
       {/* Carousel Section */}
-      <div className="bg-white">
+      <div className="bg-white pb-6 pt-20 ">
         <Carousel />
       </div>
 
       {/* arrow down with scrolling chaos background */}
-      <section className="relative flex h-25 mt-6 bg-white">
+      <section className="relative flex h-25 bg-white">
         {/* Scrolling Chaos Background Text */}
         <div className="absolute inset-0 flex items-center overflow-hidden">
           <motion.div
@@ -878,7 +881,7 @@ const Home = () => {
 
       <section
         ref={scrollTriggerRef}
-        className="relative w-full h-[400vh] bg-transparent"
+        className="relative w-full h-[400vh] bg-white"
       >
         {/* Fixed Anarc Section - Always visible during animation */}
         <div className="sticky top-0 w-full h-screen flex items-center justify-center  overflow-hidden">
@@ -932,7 +935,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/*section 2 - Video Section */}
+      {/*section 2 - anarc Video Section */}
       <div className="p-6 bg-white">
         <VideoSection />
       </div>
@@ -956,9 +959,7 @@ const Home = () => {
       <div className="bg-white">
         <Cofounder />
       </div>
-
-      {/* Footer spacer - 100vh transparent div to reveal footer */}
-      <div className="w-full h-screen bg-transparent relative z-0"></div>
+      
     </div>
   );
 };

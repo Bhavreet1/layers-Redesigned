@@ -6,7 +6,7 @@ import MainRoutes from "./routes/MainRoutes";
 import Footer from "./components/Footer";
 
 const App = () => {
-  const [showPreloader, setShowPreloader] = useState(false);
+  const [showPreloader, setShowPreloader] = useState(true);
 
   const handlePreloaderFinish = () => {
     setShowPreloader(false);
@@ -19,10 +19,12 @@ const App = () => {
   return (
     <div>
       <NavBar />
-      <div className="mt-20">
+      <div className="relative z-10">
         <MainRoutes />
       </div>
-      <Footer/>
+      {/* Spacer div to push footer below main content */}
+      <div className="h-screen"></div>
+      <Footer />
     </div>
   );
 };
