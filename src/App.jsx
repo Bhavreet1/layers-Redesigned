@@ -8,7 +8,7 @@ import Footer from "./components/Footer";
 import { ReactLenis } from "lenis/react";
 
 const App = () => {
-  const [showPreloader, setShowPreloader] = useState(true);
+  const [showPreloader, setShowPreloader] = useState(false);
 
   const handlePreloaderFinish = () => {
     setShowPreloader(false);

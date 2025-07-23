@@ -69,7 +69,7 @@ const Carousel = () => {
 
             src="./heroCarousel/ANARC.webp"
             alt="image mobile skin"
-            className="carousel-image2 slide-large  "
+            className="carousel-image2 slide-large object-contain bg-white  "
           />
         </SwiperSlide>
         <SwiperSlide className="border-2 border-blue-600  shadow">

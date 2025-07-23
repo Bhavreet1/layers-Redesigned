@@ -1,5 +1,6 @@
 import { Route, Routes } from "react-router";
 import { lazy, Suspense } from "react";
+import Anarc from "../pages/anarc/Anarc";
 
 // Lazy load components
 const Home = lazy(() => import("../pages/home/Home"));
@@ -66,7 +67,7 @@ const MainRoutes = () => {
       <Routes className="mt-10">
         <Route path="/" element={<Home />} />
         <Route path="/loader" element={<PageNotFound />} />
-        <Route path="/anarc" element={<PageNotFound />} />
+        <Route path="/anarc" element={<Anarc/>} />
         <Route path="/skins/mobile" element={<PageNotFound />} />
         <Route path="/skins/laptop" element={<PageNotFound />} />
         <Route path="/skins/ipad" element={<PageNotFound />} />
