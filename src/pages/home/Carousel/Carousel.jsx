@@ -67,7 +67,7 @@ const Carousel = () => {
               ease: [0.25, 0.1, 0.25, 1]
              }}
 
-            src="./heroCarousel/ANARC.png"
+            src="./heroCarousel/ANARC.webp"
             alt="image mobile skin"
             className="carousel-image2 slide-large  "
           />
@@ -80,14 +80,14 @@ const Carousel = () => {
               duration: .7,
               ease: [0.25, 0.1, 0.25, 1]
              }}
-            src="./heroCarousel/desktop_banner__May_designs.png"
+            src="./heroCarousel/desktop_banner__May_designs.webp"
             alt="image anarc"
             className="carousel-image carousel-image2 slide-large"
           />
         </SwiperSlide>
         <SwiperSlide>
           <img
-            src="./heroCarousel/Desktop_iPad_Skins_banner.png"
+            src="./heroCarousel/Desktop_iPad_Skins_banner.webp"
             alt="image ipad skin"
             className="carousel-image carousel-image3 slide-large"
           />

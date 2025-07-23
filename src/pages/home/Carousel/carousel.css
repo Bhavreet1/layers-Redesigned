@@ -28,20 +28,20 @@
 
 /* Custom Cursor for Swiper */
 .custom-cursor-swiper {
-  cursor: url("/cursor.png"), auto;
+  cursor: url("/cursor.webp"), auto;
 }
 
 .custom-cursor-swiper .swiper-slide {
-  cursor: url("/cursor.png"), auto;
+  cursor: url("/cursor.webp"), auto;
 }
 
 .custom-cursor-swiper .swiper-slide:hover {
-  cursor: url("/cursor.png"), pointer;
+  cursor: url("/cursor.webp"), pointer;
 }
 
 /* Custom cursor for pagination bullets */
 .custom-cursor-swiper .swiper-pagination-bullet {
-  cursor: url("/cursor.png"), pointer;
+  cursor: url("/cursor.webp"), pointer;
 }
 
 /* Carousel Images */

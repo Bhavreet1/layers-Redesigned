@@ -156,7 +156,7 @@ const NavBar = () => {
             className="flex items-center space-x-1.5 bg-white rtl:space-x-reverse rounded-2xl hover:underline underline-offset-2 shadow scale-75 sm:scale-90 lg:scale-100 overflow-hidden -translate-x-6 sm:-translate-x-4 lg:translate-x-0"
           >
             <video
-              src="./Layers - Thought Over Design White.mp4"
+              src="./Layers - Thought Over Design White.webm"
               autoPlay
               muted
               loop

@@ -161,7 +161,7 @@ const Preloader = ({ onFinish = () => { } }) => {
                         className="relative"
                     >
                         <motion.video
-                            src="./Layers - Thought Over Design_1.mp4"
+                            src="./Layers - Thought Over Design_1.webm"
                             autoPlay
                             muted
                             loop
@@ -254,7 +254,7 @@ const Preloader = ({ onFinish = () => { } }) => {
                                     }}
                                 >
                                     <video
-                                        src="./Layers - Thought Over Design White.mp4"
+                                        src="./Layers - Thought Over Design White.webm"
                                         autoPlay
                                         muted
                                         loop

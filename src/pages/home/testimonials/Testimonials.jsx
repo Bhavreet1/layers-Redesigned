@@ -30,7 +30,7 @@ const Testimonials = () => {
       rating: 5,
       testimonial:
         "Since integrating this solution into our workflow, we've experienced a significant improvement in efficiency and collaboration. The results exceeded our expectations.",
-      imageUrl: "./woman.png",
+      imageUrl: "./woman.webp",
     },
     {
       name: "David Patel",
@@ -39,7 +39,7 @@ const Testimonials = () => {
       rating: 5,
       testimonial:
         "I've tested numerous options in this category, but one stands out for its intuitive design and comprehensive functionality. Absolutely game-changing!",
-      imageUrl: "./man.png",
+      imageUrl: "./man.webp",
     },
     {
       name: "Emily Carter",
@@ -48,7 +48,7 @@ const Testimonials = () => {
       rating: 5,
       testimonial:
         "The tool we've adopted has surpassed our expectations, providing invaluable insights and support as our business continues to grow.",
-      imageUrl: "./woman.png",
+      imageUrl: "./woman.webp",
     },
     {
       name: "Michael Chen",

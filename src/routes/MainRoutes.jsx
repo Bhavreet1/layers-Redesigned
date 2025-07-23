@@ -4,7 +4,6 @@ import { lazy, Suspense } from "react";
 // Lazy load components
 const Home = lazy(() => import("../pages/home/Home"));
 const PageNotFound = lazy(() => import("../pages/PageNotFound"));
-const Preloader = lazy(() => import("../pages/home/preLoader/Preloader"));
 const dotsContainerStyle = {
   display: "flex",
   alignItems: "center",
@@ -25,8 +24,8 @@ const dotStyleBase = {
 // Loading component
 const Loading = () => (
   <div className="flex items-center justify-center min-h-screen bg-white">
-   <style>
-        {`
+    <style>
+      {`
         @keyframes pulse {
           0% {
             transform: scale(0.8);
@@ -45,19 +44,19 @@ const Loading = () => (
           }
         }
         `}
-      </style>
-      <section style={dotsContainerStyle}>
-        {[...Array(5)].map((_, i) => (
-          <div
-            key={i}
-            style={{
-              ...dotStyleBase,
-              marginRight: i === 4 ? 0 : "10px",
-              animationDelay: `${-0.3 + i * 0.2}s`,
-            }}
-          />
-        ))}
-      </section>
+    </style>
+    <section style={dotsContainerStyle}>
+      {[...Array(5)].map((_, i) => (
+        <div
+          key={i}
+          style={{
+            ...dotStyleBase,
+            marginRight: i === 4 ? 0 : "10px",
+            animationDelay: `${-0.3 + i * 0.2}s`,
+          }}
+        />
+      ))}
+    </section>
   </div>
 );
 
@@ -66,7 +65,7 @@ const MainRoutes = () => {
     <Suspense fallback={<Loading />}>
       <Routes className="mt-10">
         <Route path="/" element={<Home />} />
-        <Route path="/loader" element={<Preloader />} />
+        <Route path="/loader" element={<PageNotFound />} />
         <Route path="/anarc" element={<PageNotFound />} />
         <Route path="/skins/mobile" element={<PageNotFound />} />
         <Route path="/skins/laptop" element={<PageNotFound />} />
