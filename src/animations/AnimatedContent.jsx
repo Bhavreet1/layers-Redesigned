@@ -51,7 +51,7 @@ const AnimatedContent = ({
     });
 
     return () => {
-      ScrollTrigger.getAll().forEach(t => t.kill());
+      ScrollTrigger.getAll().forEach((t) => t.kill());
       gsap.killTweensOf(el);
     };
   }, [
@@ -68,7 +68,18 @@ const AnimatedContent = ({
     onComplete,
   ]);
 
-  return <div ref={ref}>{children}</div>;
+  return (
+    <div
+      ref={ref}
+      style={{
+        width: "100%",
+        height: "100%",
+        willChange: "transform, opacity",
+      }}
+    >
+      {children}
+    </div>
+  );
 };
 
 export default AnimatedContent;
