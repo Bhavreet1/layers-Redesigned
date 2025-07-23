@@ -12,7 +12,7 @@ const Anarc = () => {
           delay={250}
           animateBy="words"
           direction="top"
-          className="relative pt-8 px-4 -top-[2rem] lg:top-[20%] z-1 text-7xl  text-center font-bold font-[aeonic] text-white/90"
+          className="relative pt-8 px-4 -top-[2rem] lg:top-[20%] z-1 text-6xl  text-center font-bold font-[aeonic] text-white/90"
         />
         <div>
         <AnimatedContent
