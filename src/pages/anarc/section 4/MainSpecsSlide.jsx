@@ -12,7 +12,7 @@ const MainSpecsSlide = () => {
     {
       heading: "Display",
       sideQuote:
-        "Octagonal Stainless Steel dial\nDiamond-cut Crown with haptics\nBreathable Liquid Silicone strap",
+        "Bold visuals, deep contrasts – a 1.85″\n AMOLED display with Always-On Display\n that never misses a moment.",
       imageLink: "./anarc/hero.webp",
     },
     {
@@ -115,7 +115,7 @@ const MainSpecsSlide = () => {
   }, [activeSlide]);
 
   return (
-    <section className="specs-slide min-h-screen bg-black flex flex-col justify-center items-center py-16 lg:py-30">
+    <section className="specs-slide min-h-[85vh] bg-black flex flex-col justify-center items-center py-16 pb-6 lg:py-30">
       <div className="w-full max-w-7xl mx-auto px-4">
         {/* Main content area */}
         <div className="flex flex-col lg:flex-row items-center justify-between gap-12">

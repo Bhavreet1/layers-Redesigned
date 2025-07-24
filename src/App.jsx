@@ -27,9 +27,10 @@ const App = () => {
         smooth: true,
         smoothTouch: true,
       }}
+      className="w-screen overflow-hidden"
     >
       <NavBar />
-      <div className="relative z-10">
+      <div className="relative  z-10">
         <MainRoutes />
       </div>
       <div className="h-screen" />

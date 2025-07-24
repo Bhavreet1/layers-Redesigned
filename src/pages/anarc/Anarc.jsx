@@ -6,12 +6,14 @@ import { Autoplay } from "swiper/modules";
 import ShinyText from "../../animations/ShineText";
 import { Link } from "react-router-dom";
 import MainSpecsSlide from "./section 4/MainSpecsSlide";
+import Display from "./detailed_specs/Display";
+import PerformanceSection from "./detailed_specs/PerformanceSection";
 
 const Anarc = () => {
   return (
-    <div className="relative bg-black min-h-screen pb-12 text-black">
+    <div className="relative bg-black min-h-screen overflow-hidden pb-12 text-black">
       {/* section 1 - hero */}
-      <section className="hero flex flex-col justify-center items-center h-fit px-4 py-20">
+      <section className="hero flex flex-col justify-center items-center h-fit px-2 py-20">
         <BlurText
           text="Unleashing Chaos — The Anarc"
           delay={250}
@@ -91,7 +93,7 @@ const Anarc = () => {
             spotlightColor="rgba(0, 229, 255, 0.2)"
           >
             <img
-              src="./anarc/watch1.png"
+              src="./anarc/watch1.webp"
               alt="watch green"
               className=" translate-x-2.5"
             />
@@ -104,7 +106,7 @@ const Anarc = () => {
             spotlightColor="rgba(255, 225, 255, 0.2)"
           >
             <img
-              src="./anarc/watch2.png"
+              src="./anarc/watch2.web["
               alt="watch green"
               className="scale-115"
               draggable="false"
@@ -119,7 +121,7 @@ const Anarc = () => {
             spotlightColor="rgba(195, 167, 41, 0.4)"
           >
             <img
-              src="./anarc/watch3.png"
+              src="./anarc/watch3.webp"
               alt="watch green"
               className="scale-84 "
               draggable="false"
@@ -144,7 +146,12 @@ const Anarc = () => {
       </section>
 
       {/* section 4  main product specs */}
-      <MainSpecsSlide/>
+      <MainSpecsSlide />
+
+      {/* section 5 display */}
+      <Display />
+      {/* section 6 Performance Section */}
+      <PerformanceSection />
     </div>
   );
 };
