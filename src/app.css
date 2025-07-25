@@ -43,6 +43,11 @@
   font-style: italic;
   src: url(/font/LeagueScript-Regular.ttf);
 }
-body{
+html {
+  scroll-behavior: smooth;
+}
+
+body {
   background-color: white;
+  scroll-behavior: smooth;
 }

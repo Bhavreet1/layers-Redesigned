@@ -13,7 +13,12 @@ import { CartProvider } from "./contexts/CartContext";
 gsap.registerPlugin(ScrollTrigger);
 
 const App = () => {
-  const [showPreloader, setShowPreloader] = useState(true);
+
+// Check if preloader has been shown in this session
+const [showPreloader, setShowPreloader] = useState(() => {
+  return !sessionStorage.getItem("preloaderShown");
+});
+
 
   useEffect(() => {
     const updateScroll = (time) => {
@@ -30,6 +35,8 @@ const App = () => {
 
   const handlePreloaderFinish = () => {
     setShowPreloader(false);
+    // Mark preloader as shown for this session
+    sessionStorage.setItem("preloaderShown", "true");
   };
 
   if (showPreloader) {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "../contexts/CartContext";
 
@@ -215,6 +215,10 @@ export const CartSidebar = () => {
 
 // Main Cart Page Component
 function Cart() {
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
   const {
     cartItems,
     updateQuantity,

@@ -11,6 +11,7 @@ import AnarcSkins from "../pages/skins/AnarcSkins";
 import Accessories from "../pages/Accessories";
 import Cart from "../pages/Cart";
 import IpadSkins from "../pages/skins/IpadSkins";
+import ScrollToTop from "../components/ScrollToTop";
 
 // Lazy load components
 const Home = lazy(() => import("../pages/home/Home"));
@@ -74,6 +75,7 @@ const Loading = () => (
 const MainRoutes = () => {
   return (
     <Suspense fallback={<Loading />}>
+      <ScrollToTop/>
       <Routes className="mt-10">
         <Route path="/" element={<Home />} />
         <Route path="/loader" element={<PageNotFound />} />

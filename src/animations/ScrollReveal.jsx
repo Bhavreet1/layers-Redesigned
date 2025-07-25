@@ -35,81 +35,77 @@ const ScrollReveal = ({
     const el = containerRef.current;
     if (!el) return;
 
-    // Function to update ScrollTrigger when Lenis updates
+    const scroller = scrollContainerRef?.current || document.body;
+
     const updateScrollTrigger = () => {
       ScrollTrigger.update();
     };
 
-    // Listen for Lenis scroll events if Lenis is available
     if (window.lenis) {
       window.lenis.on('scroll', updateScrollTrigger);
     }
 
-    // Configure ScrollTrigger to work with Lenis
     ScrollTrigger.config({
-      // Disable ScrollTrigger's default scroll handling since Lenis handles it
       autoRefreshEvents: "visibilitychange,DOMContentLoaded,load",
       ignoreMobileResize: true,
     });
 
-    const scroller = scrollContainerRef?.current || document.body;
-
-    // Slower rotation animation
+    // Animate rotation
     gsap.fromTo(
       el,
       { transformOrigin: '0% 50%', rotate: baseRotation },
       {
-        ease: 'none',
         rotate: 0,
+        ease: 'none',
         scrollTrigger: {
           trigger: el,
           scroller: scroller,
           start: 'top bottom',
           end: rotationEnd,
-          scrub: 1, // Slightly smoothed scrub for better Lenis integration
-          invalidateOnRefresh: true,
-          refreshPriority: -1, // Lower priority to avoid conflicts
-        },
-      }
-    );
-
-    const wordElements = el.querySelectorAll('.word');
-
-    // Slower opacity animation
-    gsap.fromTo(
-      wordElements,
-      { opacity: baseOpacity, willChange: 'opacity' },
-      {
-        ease: 'none',
-        opacity: 1,
-        stagger: wordStagger,
-        scrollTrigger: {
-          trigger: el,
-          scroller: scroller,
-          start: 'top bottom-=10%',
-          end: wordAnimationEnd,
-          scrub: 1, // Slightly smoothed scrub
+          scrub: 1,
           invalidateOnRefresh: true,
           refreshPriority: -1,
         },
       }
     );
 
-    // Slower blur animation
+    const wordElements = el.querySelectorAll('.word');
+
+    // Animate opacity
+    gsap.fromTo(
+      wordElements,
+      { opacity: baseOpacity },
+      {
+        opacity: 1,
+        ease: 'none',
+        stagger: wordStagger,
+        scrollTrigger: {
+          trigger: el,
+          scroller: scroller,
+          start: 'top bottom-=10%',
+          end: wordAnimationEnd,
+          scrub: 1,
+          invalidateOnRefresh: true,
+          refreshPriority: -1,
+        },
+      }
+    );
+
+    // Animate blur if enabled
     if (enableBlur) {
       gsap.fromTo(
         wordElements,
         { filter: `blur(${blurStrength}px)` },
         {
-          ease: 'none',
           filter: 'blur(0px)',
+          ease: 'none',
           stagger: wordStagger,
           scrollTrigger: {
             trigger: el,
             scroller: scroller,
             start: 'top bottom-=10%',
             end: wordAnimationEnd,
-            scrub: 1, // Slightly smoothed scrub
+            scrub: 1,
             invalidateOnRefresh: true,
             refreshPriority: -1,
           },
@@ -117,24 +113,32 @@ const ScrollReveal = ({
       );
     }
 
-    // Cleanup function
     return () => {
       if (window.lenis) {
         window.lenis.off('scroll', updateScrollTrigger);
       }
-      
-      // Kill only ScrollTriggers created by this component
       ScrollTrigger.getAll().forEach(trigger => {
         if (trigger.trigger === el) {
           trigger.kill();
         }
       });
     };
-  }, [scrollContainerRef, enableBlur, baseRotation, baseOpacity, rotationEnd, wordAnimationEnd, blurStrength, wordStagger]);
+  }, [
+    scrollContainerRef,
+    enableBlur,
+    baseRotation,
+    baseOpacity,
+    rotationEnd,
+    wordAnimationEnd,
+    blurStrength,
+    wordStagger,
+  ]);
 
   return (
     <h2 ref={containerRef} className={`my-5 ${containerClassName}`}>
-      <p className={`text-[clamp(1.6rem,4vw,3rem)] leading-[1.5] font-semibold ${textClassName}`}>{splitText}</p>
+      <p className={`text-[clamp(1.6rem,4vw,3rem)] leading-[1.5] font-semibold ${textClassName}`}>
+        {splitText}
+      </p>
     </h2>
   );
 };

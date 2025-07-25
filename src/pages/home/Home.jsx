@@ -1,21 +1,52 @@
 import React from "react";
-import { motion, useScroll, useTransform, useInView } from "motion/react";
-import { useRef } from "react";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  useInView,
+  useSpring,
+  useMotionValue,
+  useAnimationFrame,
+} from "motion/react";
+import { useRef, useCallback } from "react";
 import Carousel from "./Carousel/Carousel";
 import "./home.css";
 import Section3 from "./section-3/Section3";
 import Testimonials from "./testimonials/Testimonials";
 import Cofounder from "./section-5/Cofounder";
 
-// Enhanced Video Section Component
+// Enhanced Video Section Component with RAF optimization
 const VideoSection = () => {
   const videoSectionRef = useRef(null);
   const videoRef = useRef(null);
   const isInView = useInView(videoSectionRef, { once: false, amount: 0.4 });
 
+  // Use motion values for better performance
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  // Smooth spring animations for mouse tracking
+  const springX = useSpring(mouseX, { stiffness: 150, damping: 15 });
+  const springY = useSpring(mouseY, { stiffness: 150, damping: 15 });
+
+  // Mouse move handler with RAF optimization
+  const handleMouseMove = useCallback(
+    (e) => {
+      const rect = videoSectionRef.current?.getBoundingClientRect();
+      if (rect) {
+        const x = (e.clientX - rect.left - rect.width / 2) / rect.width;
+        const y = (e.clientY - rect.top - rect.height / 2) / rect.height;
+        mouseX.set(x * 20);
+        mouseY.set(y * 20);
+      }
+    },
+    [mouseX, mouseY]
+  );
+
   return (
     <section
       ref={videoSectionRef}
+      onMouseMove={handleMouseMove}
       className="relative w-full min-h-screen bg-gradient-to-br from-slate-200 via-blue-200 to-slate-300 overflow-hidden rounded-[1.5rem] md:rounded-[4rem]"
     >
       {/* Enhanced Animated Background Elements */}
@@ -42,37 +73,48 @@ const VideoSection = () => {
           }}
         />
 
-        {/* Floating particles */}
-        {[...Array(12)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 bg-blue-400/60 rounded-full"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={
-              isInView
-                ? {
-                    y: [0, -30, 0],
-                    x: [0, Math.random() * 20 - 10, 0],
-                    opacity: [0.3, 0.8, 0.3],
-                    scale: [1, 1.5, 1],
-                  }
-                : {}
-            }
-            transition={{
-              duration: 3 + Math.random() * 2,
-              repeat: Infinity,
-              delay: Math.random() * 2,
-              ease: "easeInOut",
-            }}
-          />
-        ))}
+        {/* Optimized Floating particles with RAF */}
+        {[...Array(12)].map((_, i) => {
+          const particleX = useMotionValue(Math.random() * 100);
+          const particleY = useMotionValue(Math.random() * 100);
 
-        {/* Enhanced geometric shapes */}
+          return (
+            <motion.div
+              key={i}
+              className="absolute w-1 h-1 bg-blue-400/60 rounded-full will-change-transform"
+              style={{
+                left: `${particleX.get()}%`,
+                top: `${particleY.get()}%`,
+                x: useTransform(springX, (x) => x * (0.5 + i * 0.1)),
+                y: useTransform(springY, (y) => y * (0.5 + i * 0.1)),
+              }}
+              animate={
+                isInView
+                  ? {
+                      y: [0, -30, 0],
+                      x: [0, Math.random() * 20 - 10, 0],
+                      opacity: [0.3, 0.8, 0.3],
+                      scale: [1, 1.5, 1],
+                    }
+                  : {}
+              }
+              transition={{
+                duration: 3 + Math.random() * 2,
+                repeat: Infinity,
+                delay: Math.random() * 2,
+                ease: "easeInOut",
+              }}
+            />
+          );
+        })}
+
+        {/* Enhanced geometric shapes with mouse interaction */}
         <motion.div
-          className="absolute top-20 left-10 w-32 h-32 border-2 border-blue-600/30 rounded-full"
+          className="absolute top-20 left-10 w-32 h-32 border-2 border-blue-600/30 rounded-full will-change-transform"
+          style={{
+            x: useTransform(springX, (x) => x * 0.3),
+            y: useTransform(springY, (y) => y * 0.3),
+          }}
           animate={
             isInView
               ? {
@@ -94,7 +136,11 @@ const VideoSection = () => {
         />
 
         <motion.div
-          className="absolute top-40 right-20 w-24 h-24 bg-blue-600/20 rounded-lg"
+          className="absolute top-40 right-20 w-24 h-24 bg-blue-600/20 rounded-lg will-change-transform"
+          style={{
+            x: useTransform(springX, (x) => x * -0.4),
+            y: useTransform(springY, (y) => y * -0.4),
+          }}
           animate={
             isInView
               ? {
@@ -371,7 +417,7 @@ const VideoSection = () => {
   );
 };
 
-// Layer's Skin Text Reveal Component
+// Layer's Skin Text Reveal Component with RAF optimization
 const LayersTextReveal = () => {
   const textRevealRef = useRef(null);
   const { scrollYProgress } = useScroll({
@@ -382,25 +428,32 @@ const LayersTextReveal = () => {
   // Text to reveal word by word
   const words = ["Layers", "Skin", "Defines", "Premium", "Experience"];
 
+  // Use springs for smoother animations
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001,
+  });
+
   // Create opacity transforms for each word based on scroll progress - Fixed timing
   const wordOpacities = words.map((_, index) => {
     const start = index * 0.12 + 0.05; // Better spacing
     const end = start + 0.12; // Adequate reveal duration
-    return useTransform(scrollYProgress, [start, end, 1], [0, 1, 1]);
+    return useTransform(smoothProgress, [start, end, 1], [0, 1, 1]);
   });
 
   // Create scale transforms for dramatic effect
   const wordScales = words.map((_, index) => {
     const start = index * 0.12 + 0.05;
     const end = start + 0.12;
-    return useTransform(scrollYProgress, [start, end], [0.5, 1]);
+    return useTransform(smoothProgress, [start, end], [0.5, 1]);
   });
 
   // Create blur transforms for smooth reveal
   const wordBlurs = words.map((_, index) => {
     const start = index * 0.12 + 0.05;
     const end = start + 0.12;
-    return useTransform(scrollYProgress, [start, end], [10, 0]);
+    return useTransform(smoothProgress, [start, end], [10, 0]);
   });
 
   // Create dynamic glow effect that moves from word to word
@@ -409,7 +462,7 @@ const LayersTextReveal = () => {
     const end = start + 0.15;
     const nextStart = (index + 1) * 0.12 + 0.05;
     return useTransform(
-      scrollYProgress,
+      smoothProgress,
       [start, end, Math.min(nextStart, 0.8)],
       [
         "0 0 30px rgba(255,255,255,0.3)",
@@ -427,12 +480,12 @@ const LayersTextReveal = () => {
     >
       {/* Sticky container for text */}
       <div className="sticky top-0 w-full h-screen flex items-center justify-center overflow-hidden">
-        {/* Clean Animated Background */}
+        {/* Clean Animated Background with smooth transitions */}
         <motion.div
-          className="absolute inset-0 bg-gradient-to-br from-slate-900 via-[#1d0f51] to-slate-800"
+          className="absolute inset-0 bg-gradient-to-br from-slate-900 via-[#1d0f51] to-slate-800 will-change-auto"
           style={{
             background: useTransform(
-              scrollYProgress,
+              smoothProgress,
               [0, 0.3, 0.6, 1],
               [
                 "linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%)",
@@ -444,11 +497,11 @@ const LayersTextReveal = () => {
           }}
         />
 
-        {/* Subtle animated overlay */}
+        {/* Subtle animated overlay with smooth transitions */}
         <motion.div
-          className="absolute inset-0"
+          className="absolute inset-0 will-change-auto"
           style={{
-            opacity: useTransform(scrollYProgress, [0, 1], [0.1, 0.3]),
+            opacity: useTransform(smoothProgress, [0, 1], [0.1, 0.3]),
             background: `
               radial-gradient(circle at 30% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
               radial-gradient(circle at 70% 80%, rgba(147, 197, 253, 0.08) 0%, transparent 60%),
@@ -459,11 +512,11 @@ const LayersTextReveal = () => {
 
         {/* Enhanced Floating Background Elements with Particles */}
         <div className="absolute inset-0">
-          {/* Floating particles that react to scroll */}
+          {/* Optimized floating particles that react to scroll */}
           {[...Array(20)].map((_, i) => (
             <motion.div
               key={i}
-              className="absolute w-1 h-1 bg-white/40 rounded-full"
+              className="absolute w-1 h-1 bg-white/40 rounded-full will-change-transform"
               style={{
                 left: `${Math.random() * 100}%`,
                 top: `${Math.random() * 100}%`,
@@ -671,17 +724,20 @@ const LayersTextReveal = () => {
 
         {/* Main text container */}
         <div className="relative z-10 text-center px-6">
-          {/* Reveal text word by word */}
+          {/* Reveal text word by word with optimized rendering */}
           <div className="flex flex-wrap justify-center items-center gap-4 lg:gap-8">
             {words.map((word, index) => (
               <motion.span
                 key={index}
-                className="text-white font-[Zumme] font-bold select-none"
+                className="text-white font-[Zumme] font-bold select-none will-change-transform"
                 style={{
                   fontSize: "clamp(3rem, 8vw, 5rem)",
                   opacity: wordOpacities[index],
                   scale: wordScales[index],
-                  filter: `blur(${wordBlurs[index]}px)`,
+                  filter: useTransform(
+                    wordBlurs[index],
+                    (blur) => `blur(${blur}px)`
+                  ),
                   textShadow: wordGlows[index],
                 }}
               >
@@ -692,10 +748,10 @@ const LayersTextReveal = () => {
 
           {/* Subtitle that appears after main text */}
           <motion.p
-            className="text-white text-lg lg:text-xl mt-8 max-w-2xl mx-auto leading-relaxed"
+            className="text-white text-lg lg:text-xl mt-8 max-w-2xl mx-auto leading-relaxed will-change-transform"
             style={{
-              opacity: useTransform(scrollYProgress, [0.5, 0.7], [0, 1]),
-              y: useTransform(scrollYProgress, [0.5, 0.7], [30, 0]),
+              opacity: useTransform(smoothProgress, [0.5, 0.7], [0, 1]),
+              y: useTransform(smoothProgress, [0.5, 0.7], [30, 0]),
             }}
           >
             Crafted with precision, designed for perfection. Every detail
@@ -767,69 +823,83 @@ const Home = () => {
     offset: ["start end", "end start"],
   });
 
+  // Use spring for smoother scroll-based animations
+  const smoothScrollProgress = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001,
+  });
+
   // Responsive transform values with viewport-based units
   // Left div: slides in from left, exits by rotating and scaling down
   const leftX = useTransform(
-    scrollYProgress,
+    smoothScrollProgress,
     [0, 0.25, 0.5, 0.75],
     ["-30vw", "0vw", "0vw", "0vw"]
   );
   const leftOpacity = useTransform(
-    scrollYProgress,
+    smoothScrollProgress,
     [0, 0.2, 0.6, 0.8],
     [0, 1, 1, 0]
   );
-  const leftRotate = useTransform(scrollYProgress, [0.5, 0.75], [0, 180]);
-  const leftScale = useTransform(scrollYProgress, [0.5, 0.75], [1, 0]);
+  const leftRotate = useTransform(smoothScrollProgress, [0.5, 0.75], [0, 180]);
+  const leftScale = useTransform(smoothScrollProgress, [0.5, 0.75], [1, 0]);
 
   // Right div: slides in from right, exits by moving up and fading
   const rightX = useTransform(
-    scrollYProgress,
+    smoothScrollProgress,
     [0.1, 0.35, 0.5, 0.75],
     ["30vw", "0vw", "0vw", "0vw"]
   );
-  const rightY = useTransform(scrollYProgress, [0.5, 0.75], ["0vh", "-50vh"]);
+  const rightY = useTransform(
+    smoothScrollProgress,
+    [0.5, 0.75],
+    ["0vh", "-50vh"]
+  );
   const rightOpacity = useTransform(
-    scrollYProgress,
+    smoothScrollProgress,
     [0.1, 0.25, 0.6, 0.8],
     [0, 1, 1, 0]
   );
 
   // Center div: fades up, exits by expanding and fading
   const centerY = useTransform(
-    scrollYProgress,
+    smoothScrollProgress,
     [0.2, 0.4, 0.5, 0.75],
     ["20vh", "0vh", "0vh", "0vh"]
   );
   const centerOpacity = useTransform(
-    scrollYProgress,
+    smoothScrollProgress,
     [0.2, 0.35, 0.6, 0.8],
     [0, 1, 1, 0]
   );
-  const centerScale = useTransform(scrollYProgress, [0.5, 0.75], [1, 2]);
+  const centerScale = useTransform(smoothScrollProgress, [0.5, 0.75], [1, 2]);
 
   // Text: fades up, exits by spinning and shrinking
   const textY = useTransform(
-    scrollYProgress,
+    smoothScrollProgress,
     [0.2, 0.4, 0.5, 0.75],
     ["15vh", "0vh", "0vh", "-20vh"]
   );
   const textOpacity = useTransform(
-    scrollYProgress,
+    smoothScrollProgress,
     [0.2, 0.35, 0.6, 0.8],
     [0, 1, 1, 0]
   );
   const textScale = useTransform(
-    scrollYProgress,
+    smoothScrollProgress,
     [0.2, 0.4, 0.5, 0.75],
     [0.8, 1, 1, 0.2]
   );
-  const textRotate = useTransform(scrollYProgress, [0.5, 0.75], [0, 360]);
+  const textRotate = useTransform(smoothScrollProgress, [0.5, 0.75], [0, 360]);
 
   return (
     <div
       className="home relative w-full"
-      style={{ scrollSnapType: "y proximity" }}
+      style={{
+        scrollSnapType: "y proximity",
+        willChange: "scroll-position",
+      }}
     >
       {/* Carousel Section */}
       <div className="bg-white pb-6 pt-20 ">
@@ -838,10 +908,10 @@ const Home = () => {
 
       {/* arrow down with scrolling chaos background */}
       <section className="relative flex h-25 bg-white">
-        {/* Scrolling Chaos Background Text */}
+        {/* Scrolling Chaos Background Text with RAF optimization */}
         <div className="absolute inset-0 flex items-center overflow-hidden">
           <motion.div
-            className="text-gray-300 font-[Zumme] font-bold select-none pointer-events-none whitespace-nowrap opacity-20"
+            className="text-gray-300 font-[Zumme] font-bold select-none pointer-events-none whitespace-nowrap opacity-20 will-change-transform"
             style={{
               fontSize: "clamp(4rem, 12vw, 8rem)",
               lineHeight: "1",
@@ -888,7 +958,7 @@ const Home = () => {
           <div className="relative w-full h-[40vh] sm:h-[50vh] md:h-[400px]">
             {/* Left div - slides in from left, exits by rotating and scaling down */}
             <motion.div
-              className="absolute top-0 left-0 w-[35%] sm:w-[32%] md:w-[30%] h-[16%] sm:h-[28%] md:h-[30%] bg-blue-600 z-10"
+              className="absolute top-0 left-0 w-[35%] sm:w-[32%] md:w-[30%] h-[16%] sm:h-[28%] md:h-[30%] bg-blue-600 z-10 will-change-transform"
               style={{
                 x: leftX,
                 opacity: leftOpacity,
@@ -899,7 +969,7 @@ const Home = () => {
 
             {/* Center div - fades up, exits by expanding and fading */}
             <motion.div
-              className="absolute top-[25%] sm:top-[28%] md:top-[30%] left-[10%] sm:left-[12%] md:left-[15%] h-[50%] sm:h-[44%] md:h-[40%] w-[80%] sm:w-[76%] md:w-[70%] bg-blue-600 z-0"
+              className="absolute top-[25%] sm:top-[28%] md:top-[30%] left-[10%] sm:left-[12%] md:left-[15%] h-[50%] sm:h-[44%] md:h-[40%] w-[80%] sm:w-[76%] md:w-[70%] bg-blue-600 z-0 will-change-transform"
               style={{
                 y: centerY,
                 opacity: centerOpacity,
@@ -909,7 +979,7 @@ const Home = () => {
 
             {/* Right div - slides in from right, exits by moving up and fading */}
             <motion.div
-              className="absolute bottom-0 right-0 w-[35%] sm:w-[32%] md:w-[30%] h-[16%] sm:h-[28%] md:h-[30%] bg-blue-600 z-10"
+              className="absolute bottom-0 right-0 w-[35%] sm:w-[32%] md:w-[30%] h-[16%] sm:h-[28%] md:h-[30%] bg-blue-600 z-10 will-change-transform"
               style={{
                 x: rightX,
                 y: rightY,
@@ -919,7 +989,7 @@ const Home = () => {
 
             {/* Text - fades up, exits by spinning and shrinking */}
             <motion.div
-              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20"
+              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20 will-change-transform"
               style={{
                 y: textY,
                 opacity: textOpacity,
@@ -959,7 +1029,6 @@ const Home = () => {
       <div className="">
         <Cofounder />
       </div>
-      
     </div>
   );
 };

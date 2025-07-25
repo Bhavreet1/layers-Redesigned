@@ -127,7 +127,7 @@ const Story = () => {
         "Anarc Watch challenges conventional timekeeping to find new inspiration. And rejects the user manual of this-is-how-time-has-always-been-measured. Do your own timing, it says. Find your own rhythm.",
       media: {
         type: "image",
-        src: "/story/story 1.jpg",
+        src: "/story/anarc1.1.jpg",
         alt: "Anarc Watch creative timekeeping and inspiration",
       },
     },
@@ -136,7 +136,7 @@ const Story = () => {
         "Anarc Watch has its own mess and methods of time. The source of revolutionary timepieces and bright chronological ideas. Crazy horological experiments and accidental watchmaking genius.",
       media: {
         type: "image",
-        src: "/story/skins bg.jpg",
+        src: "/story/anarc 1.2.jpg",
         alt: "Anarc Watch creative process and experimentation",
       },
       reverse: true,
