@@ -8,10 +8,12 @@ import { Link } from "react-router-dom";
 import MainSpecsSlide from "./section 4/MainSpecsSlide";
 import Display from "./detailed_specs/Display";
 import PerformanceSection from "./detailed_specs/PerformanceSection";
+import Wallpaper from "./Wallpaper";
+import BoxContent from "./BoxContent";
 
 const Anarc = () => {
   return (
-    <div className="relative bg-black min-h-screen overflow-hidden pb-12 text-black">
+    <div className="relative bg-black min-h-screen overflow-hidden  text-black">
       {/* section 1 - hero */}
       <section className="hero flex flex-col justify-center items-center h-fit px-2 py-20">
         <BlurText
@@ -106,7 +108,7 @@ const Anarc = () => {
             spotlightColor="rgba(255, 225, 255, 0.2)"
           >
             <img
-              src="./anarc/watch2.web["
+              src="./anarc/watch2.webp"
               alt="watch green"
               className="scale-115"
               draggable="false"
@@ -152,6 +154,12 @@ const Anarc = () => {
       <Display />
       {/* section 6 Performance Section */}
       <PerformanceSection />
+
+      {/* section 7 wallpapers */}
+      <Wallpaper/>
+
+      {/* section 8  inside box*/}
+      <BoxContent/>
     </div>
   );
 };

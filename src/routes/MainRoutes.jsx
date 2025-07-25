@@ -1,6 +1,16 @@
 import { Route, Routes } from "react-router";
 import { lazy, Suspense } from "react";
 import Anarc from "../pages/anarc/Anarc";
+import SignInPage from "../pages/Auth/SignInPage";
+import SignUpPage from "../pages/Auth/SignUpPage";
+import SSOCallback from "../pages/Auth/SSOCallback";
+import MobileSkins from "../pages/skins/MobileSkins";
+import LaptopSkins from "../pages/skins/LaptopSkins";
+import Story from "../pages/our-story/Story";
+import AnarcSkins from "../pages/skins/AnarcSkins";
+import Accessories from "../pages/Accessories";
+import Cart from "../pages/Cart";
+import IpadSkins from "../pages/skins/IpadSkins";
 
 // Lazy load components
 const Home = lazy(() => import("../pages/home/Home"));
@@ -67,16 +77,17 @@ const MainRoutes = () => {
       <Routes className="mt-10">
         <Route path="/" element={<Home />} />
         <Route path="/loader" element={<PageNotFound />} />
-        <Route path="/anarc" element={<Anarc/>} />
-        <Route path="/skins/mobile" element={<PageNotFound />} />
-        <Route path="/skins/laptop" element={<PageNotFound />} />
-        <Route path="/skins/ipad" element={<PageNotFound />} />
-        <Route path="/skins/anarc" element={<PageNotFound />} />
-        <Route path="/accessories" element={<PageNotFound />} />
-        <Route path="/our-story" element={<PageNotFound />} />
-        <Route path="/cart" element={<PageNotFound />} />
-        <Route path="/login" element={<PageNotFound />} />
-        <Route path="/register" element={<PageNotFound />} />
+        <Route path="/anarc" element={<Anarc />} />
+        <Route path="/skins/mobile" element={<MobileSkins />} />
+        <Route path="/skins/laptop" element={<LaptopSkins />} />
+        <Route path="/skins/ipad" element={<IpadSkins />} />
+        <Route path="/skins/anarc" element={<AnarcSkins />} />
+        <Route path="/accessories" element={<Accessories />} />
+        <Route path="/our-story" element={<Story />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/sign-in" element={<SignInPage />} />
+        <Route path="/sign-in/sso-callback" element={<SSOCallback />} />
+        <Route path="/sign-up" element={<SignUpPage />} />
         <Route path="/profile" element={<PageNotFound />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>

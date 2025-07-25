@@ -8,7 +8,7 @@ const PerformanceSection = () => {
     // Preload background image
     const bgImg = new Image();
     bgImg.onload = () => setBackgroundLoaded(true);
-    bgImg.src = "./anarc/bg3.jpg";
+    bgImg.src = "./anarc/bg3.webp";
 
     // Preload chipset image
     const chipsetImg = new Image();

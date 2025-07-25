@@ -7,10 +7,13 @@ import {
 import { useRef, useState, useEffect } from "react";
 import { IoBagOutline } from "react-icons/io5";
 import { FaUser, FaBars } from "react-icons/fa6";
-import { FaTimes } from "react-icons/fa";
+import { FaTimes, FaSignOutAlt, FaUserCircle } from "react-icons/fa";
 import { Link, NavLink } from "react-router-dom";
+import { useUser, useClerk } from "@clerk/clerk-react";
 import "./navbar.css";
-import { link } from "motion/react-client";
+import { useNavigate } from "react-router-dom";
+import { CartSidebar } from "../pages/Cart";
+import { useCart } from "../contexts/CartContext";
 
 // Magnetic hover wrapper
 const MagneticLink = ({ children }) => {
@@ -69,11 +72,80 @@ const Dropdown = ({ items }) => {
   );
 };
 
+// User dropdown component
+const UserDropdown = ({ isSignedIn, user, signOut, onClose }) => {
+  const handleSignOut = () => {
+    signOut();
+    onClose();
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: -10 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -10 }}
+      transition={{ duration: 0.2 }}
+      className="absolute right-0 mt-2 w-48 bg-white/95 shadow-lg rounded-lg py-2 z-50 border border-blue-600/50"
+    >
+      {isSignedIn ? (
+        <>
+          <div className="px-4 py-2 border-b border-gray-200">
+            <p className="text-sm font-medium text-gray-900">
+              {user?.firstName || user?.emailAddresses[0]?.emailAddress}
+            </p>
+            <p className="text-xs text-gray-500">
+              {user?.emailAddresses[0]?.emailAddress}
+            </p>
+          </div>
+          <Link
+            to="/profile"
+            onClick={onClose}
+            className="flex items-center px-4 py-2 text-gray-700 hover:bg-blue-200 transition-all duration-200"
+          >
+            <FaUserCircle className="mr-2" />
+            Profile
+          </Link>
+          <button
+            onClick={handleSignOut}
+            className="flex items-center w-full px-4 py-2 text-gray-700 hover:bg-blue-200 transition-all duration-200"
+          >
+            <FaSignOutAlt className="mr-2" />
+            Sign Out
+          </button>
+        </>
+      ) : (
+        <>
+          <Link
+            to="/sign-in"
+            onClick={onClose}
+            className="block px-4 py-2 text-gray-700 hover:bg-blue-200 transition-all duration-200"
+          >
+            Sign In
+          </Link>
+          <Link
+            to="/sign-up"
+            onClick={onClose}
+            className="block px-4 py-2 text-gray-700 hover:bg-blue-200 transition-all duration-200"
+          >
+            Sign Up
+          </Link>
+        </>
+      )}
+    </motion.div>
+  );
+};
+
 const NavBar = () => {
   const [hoveredMenu, setHoveredMenu] = useState(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true); // Show by default
   const [lastScrollY, setLastScrollY] = useState(0);
+  const [showUserDropdown, setShowUserDropdown] = useState(false);
+
+  const navigate = useNavigate();
+  const { isSignedIn, user } = useUser();
+  const { signOut } = useClerk();
+  const { toggleCart, getTotalItems } = useCart();
 
   // Scroll detection logic
   useEffect(() => {
@@ -114,25 +186,38 @@ const NavBar = () => {
     return () => window.removeEventListener("scroll", throttledHandleScroll);
   }, [lastScrollY]);
 
+  // Close user dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        showUserDropdown &&
+        !event.target.closest(".user-dropdown-container")
+      ) {
+        setShowUserDropdown(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [showUserDropdown]);
+
   const navItems = [
-    { name: "Anarc", dropdown: null ,link:"/anarc" },
+    { name: "Anarc", dropdown: null, link: "/anarc" },
     {
       name: "Skins",
       dropdown: [
         { label: "Mobile Skins", link: "/skins/mobile" },
         { label: "Ipad Skins", link: "/skins/ipad" },
         { label: "Laptop Skins", link: "/skins/laptop" },
-        { label: "Anarc Skins", link: "/accessories/skins" }
+        { label: "Anarc Skins", link: "/skins/anarc" },
       ],
     },
     {
       name: "Accessories",
       dropdown: null,
-      link: "/accessories"
+      link: "/accessories",
     },
-    { name: "Our-Story", dropdown: null ,
-      link: "/our-story"
-    },
+    { name: "Our-Story", dropdown: null, link: "/our-story" },
   ];
 
   return (
@@ -170,20 +255,65 @@ const NavBar = () => {
 
           {/* Right Icons */}
           <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-            <div className="flex w-25 bg-white/95 md:w-30 justify-evenly border-2 rounded-xl border-blue-600/40 py-1">
+            <div className="flex w-25 bg-white/95 md:w-30 justify-evenly items-center border-2 rounded-xl border-blue-600/40 py-1">
               <MagneticLink>
-                <IoBagOutline className="hover:bg-gray-300 rounded-2xl text-4xl ease duration-200 p-1" />
+                <div className="relative">
+                  <IoBagOutline
+                    onClick={toggleCart}
+                    className="hover:bg-gray-300 rounded-2xl cursor-pointer text-4xl ease duration-200 p-1"
+                  />
+                  {/* Cart item count badge */}
+                  {(() => {
+                    try {
+                      const totalItems = getTotalItems();
+                      return totalItems > 0 ? (
+                        <span className="absolute -top-1 -right-1 bg-blue-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                          {totalItems}
+                        </span>
+                      ) : null;
+                    } catch {
+                      return null;
+                    }
+                  })()}
+                </div>
               </MagneticLink>
 
               {/* Desktop: User Icon, Tablet/Mobile: Hamburger Menu */}
               <MagneticLink>
                 <button
                   onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                  className="lg:hidden hover:text-blue-600 hover:bg-gray-300 mt-1 rounded-2xl text-2xl ease duration-200 p-1"
+                  className="lg:hidden cursor-pointer  hover:text-blue-600 hover:bg-gray-300 mt-1 rounded-2xl text-2xl ease duration-200 p-1"
                 >
                   {isMobileMenuOpen ? <FaTimes /> : <FaBars />}
                 </button>
-                <FaUser className="hidden lg:block hover:text-blue-600 hover:bg-gray-300 rounded-2xl text-4xl ease duration-200 p-1" />
+                <div className="hidden lg:block relative user-dropdown-container">
+                  <button
+                    onClick={() => setShowUserDropdown(!showUserDropdown)}
+                    className="hover:text-blue-600 hover:bg-gray-300 rounded-2xl text-2xl ease duration-200 p-1 flex items-center"
+                  >
+                    {isSignedIn && user?.imageUrl ? (
+                      <img
+                        src={user.imageUrl}
+                        alt="Profile"
+                        className="w-7 h-7  rounded-full object-cover"
+                      />
+                    ) : (
+                      <FaUser />
+                    )}
+                  </button>
+
+                  {/* Desktop User Dropdown */}
+                  <AnimatePresence>
+                    {showUserDropdown && (
+                      <UserDropdown
+                        isSignedIn={isSignedIn}
+                        user={user}
+                        signOut={signOut}
+                        onClose={() => setShowUserDropdown(false)}
+                      />
+                    )}
+                  </AnimatePresence>
+                </div>
               </MagneticLink>
             </div>
           </div>
@@ -299,18 +429,87 @@ const NavBar = () => {
 
                 {/* Mobile User Section */}
                 <div className="mt-8 pt-6 border-t border-gray-200">
-                  <div className="flex items-center space-x-3">
-                    <FaUser className="text-2xl text-gray-600" />
-                    <span className="text-lg font-medium text-gray-700">
-                      Account
-                    </span>
-                  </div>
+                  {isSignedIn ? (
+                    <>
+                      <div className="flex items-center space-x-3 mb-4">
+                        {user?.imageUrl ? (
+                          <img
+                            src={user.imageUrl}
+                            alt="Profile"
+                            className="w-8 h-8 rounded-full object-cover"
+                          />
+                        ) : (
+                          <FaUser className="text-2xl text-gray-600" />
+                        )}
+                        <div>
+                          <p className="text-lg font-medium text-gray-700">
+                            {user?.firstName || "User"}
+                          </p>
+                          <p className="text-sm text-gray-500">
+                            {user?.emailAddresses[0]?.emailAddress}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="space-y-2">
+                        <Link
+                          to="/profile"
+                          onClick={() => setIsMobileMenuOpen(false)}
+                          className="flex items-center space-x-3 text-gray-700 hover:text-blue-600 transition-colors duration-200 py-2"
+                        >
+                          <FaUserCircle className="text-xl" />
+                          <span>Profile</span>
+                        </Link>
+
+                        <button
+                          onClick={() => {
+                            signOut();
+                            setIsMobileMenuOpen(false);
+                          }}
+                          className="flex items-center space-x-3 text-gray-700 hover:text-blue-600 transition-colors duration-200 py-2 w-full text-left"
+                        >
+                          <FaSignOutAlt className="text-xl" />
+                          <span>Sign Out</span>
+                        </button>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div className="flex items-center space-x-3 mb-4">
+                        <FaUser className="text-2xl text-gray-600" />
+                        <span className="text-lg font-medium text-gray-700">
+                          Account
+                        </span>
+                      </div>
+
+                      <div className="space-y-2">
+                        <Link
+                          to="/sign-in"
+                          onClick={() => setIsMobileMenuOpen(false)}
+                          className="block text-gray-700 hover:text-blue-600 transition-colors duration-200 py-2"
+                        >
+                          Sign In
+                        </Link>
+
+                        <Link
+                          to="/sign-up"
+                          onClick={() => setIsMobileMenuOpen(false)}
+                          className="block text-gray-700 hover:text-blue-600 transition-colors duration-200 py-2"
+                        >
+                          Sign Up
+                        </Link>
+                      </div>
+                    </>
+                  )}
                 </div>
               </div>
             </motion.div>
           </>
         )}
       </AnimatePresence>
+
+      {/* Cart Sidebar */}
+      <CartSidebar />
     </div>
   );
 };
