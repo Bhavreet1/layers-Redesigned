@@ -1,11 +1,49 @@
 import React, { useState } from "react";
 import Maintenance from "../Maintenance";
+import { useCart } from "../../contexts/CartContext";
 
 const MobileSkins = () => {
+  const { addToCart, toggleCart } = useCart();
   const [selectedBrand, setSelectedBrand] = useState("");
   const [selectedModel, setSelectedModel] = useState("");
   const [selectedDesign, setSelectedDesign] = useState(0);
   const [selectedBundle, setSelectedBundle] = useState(1);
+  const [error, setError] = useState("");
+
+  const handleAddToCart = () => {
+    // Reset previous error
+    setError("");
+
+    // Validate selections
+    if (!selectedBrand) {
+      setError("Please select a brand");
+      return;
+    }
+    if (!selectedModel) {
+      setError("Please select a model");
+      return;
+    }
+
+    const selectedBundleDetails = bundles.find((b) => b.id === selectedBundle);
+    const selectedDesignDetails = designs[selectedDesign];
+
+    // Create cart item
+    const cartItem = {
+      id: `${selectedBrand}-${selectedModel}-${selectedDesign}-${Date.now()}`, // Unique ID for the cart item
+      title: `${selectedBrand} ${selectedModel} Skin - ${selectedDesignDetails.name}`,
+      brand: selectedBrand,
+      model: selectedModel,
+      design: selectedDesignDetails.name,
+      quantity: selectedBundleDetails.quantity,
+      price: selectedBundleDetails.price,
+      image: selectedDesignDetails.image,
+      type: "mobile-skin",
+    };
+
+    // Add to cart and show cart
+    addToCart(cartItem);
+    toggleCart(); // Open the cart drawer after adding item
+  };
 
   const brands = ["Apple", "Samsung", "OnePlus", "Google", "Xiaomi"];
   const models = {
@@ -35,9 +73,9 @@ const MobileSkins = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 px-4 py-12">
+    <div className="min-h-screen bg-gray-50 px-3 sm:px-4 py-12 sm:py-12">
       {/* Breadcrumb */}
-      <div className="flex items-center text-sm text-gray-500 mb-6">
+      <div className="flex items-center text-xs sm:text-sm text-gray-500 mb-4 sm:mb-6">
         <span>Home</span>
         <span className="mx-2">/</span>
         <span className="text-gray-900">Build Your Skin</span>
@@ -46,9 +84,9 @@ const MobileSkins = () => {
       <div className="max-w-6xl mx-auto">
         <div className="grid lg:grid-cols-2 gap-8">
           {/* Product Preview */}
-          <div className="bg-gray-200 rounded-2xl p-8 flex items-center justify-center min-h-[400px] lg:min-h-[600px]">
+          <div className="bg-gray-200 rounded-2xl p-4 sm:p-8 flex items-center justify-center min-h-[300px] sm:min-h-[400px] lg:min-h-[600px]">
             <div className="relative">
-              <div className="w-64 h-[500px] bg-gradient-to-br from-amber-100 to-amber-200 rounded-[3rem] p-4 shadow-2xl">
+              <div className="w-48 sm:w-64 h-[380px] sm:h-[500px] bg-gradient-to-br from-amber-100 to-amber-200 rounded-[2rem] sm:rounded-[3rem] p-3 sm:p-4 shadow-2xl">
                 {/* Phone mockup with floral pattern */}
                 <div className="w-full h-full bg-gradient-to-br from-amber-200 to-amber-300 rounded-[2.5rem] relative overflow-hidden">
                   <div className="absolute inset-0 opacity-60">
@@ -149,32 +187,32 @@ const MobileSkins = () => {
             </div>
 
             {/* Pricing Bundles */}
-            <div className="bg-gray-100 rounded-2xl p-6">
-              <div className="text-center mb-6">
-                <p className="text-lg font-semibold text-gray-900">
+            <div className="bg-gray-100 rounded-xl sm:rounded-2xl p-4 sm:p-6">
+              <div className="text-center mb-4 sm:mb-6">
+                <p className="text-base sm:text-lg font-semibold text-gray-900">
                   Upto 40% savings on bundles
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="grid grid-cols-3 gap-2 sm:gap-4">
                 {bundles.map((bundle) => (
                   <button
                     key={bundle.id}
                     onClick={() => setSelectedBundle(bundle.id)}
-                    className={`p-4 rounded-xl border-2 transition-all ${
+                    className={`p-2 sm:p-4 rounded-lg sm:rounded-xl border-2 transition-all ${
                       selectedBundle === bundle.id
                         ? "border-blue-500 bg-blue-50"
                         : "border-gray-200 bg-white hover:border-gray-300"
                     }`}
                   >
                     <div className="text-center">
-                      <h3 className="font-semibold text-gray-900 mb-1">
+                      <h3 className="font-semibold text-gray-900 text-sm sm:text-base mb-0.5 sm:mb-1">
                         Buy {bundle.quantity}
                       </h3>
-                      <p className="text-sm text-gray-600 mb-2">
+                      <p className="text-xs sm:text-sm text-gray-600 mb-1 sm:mb-2">
                         {bundle.label}
                       </p>
-                      <p className="text-2xl font-bold text-blue-600">
+                      <p className="text-lg sm:text-2xl font-bold text-blue-600">
                         ₹{bundle.price}
                       </p>
                     </div>
@@ -185,11 +223,11 @@ const MobileSkins = () => {
 
             {/* Design Selection */}
             <div>
-              <h3 className="text-xl font-bold text-gray-900 mb-4">
+              <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-3 sm:mb-4">
                 Choose Your Design
               </h3>
 
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-4">
                 {designs.map((design, index) => (
                   <button
                     key={design.id}
@@ -233,15 +271,25 @@ const MobileSkins = () => {
               </div>
             </div>
 
+            {/* Error Message */}
+            {error && (
+              <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg text-sm mb-4">
+                {error}
+              </div>
+            )}
+
             {/* Add to Cart Button */}
-            <button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-6 rounded-xl transition-colors">
+            <button
+              onClick={handleAddToCart}
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 sm:py-4 px-4 sm:px-6 rounded-lg sm:rounded-xl transition-colors text-base sm:text-lg"
+            >
               Add to Cart - ₹
               {bundles.find((b) => b.id === selectedBundle)?.price}
             </button>
           </div>
         </div>
       </div>
-      <Maintenance/>
+      <Maintenance />
     </div>
   );
 };

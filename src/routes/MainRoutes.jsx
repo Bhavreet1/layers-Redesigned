@@ -12,6 +12,7 @@ import Accessories from "../pages/Accessories";
 import Cart from "../pages/Cart";
 import IpadSkins from "../pages/skins/IpadSkins";
 import ScrollToTop from "../components/ScrollToTop";
+import Profile from "../pages/Profile/Profile";
 
 // Lazy load components
 const Home = lazy(() => import("../pages/home/Home"));
@@ -90,7 +91,7 @@ const MainRoutes = () => {
         <Route path="/sign-in" element={<SignInPage />} />
         <Route path="/sign-in/sso-callback" element={<SSOCallback />} />
         <Route path="/sign-up" element={<SignUpPage />} />
-        <Route path="/profile" element={<PageNotFound />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
     </Suspense>

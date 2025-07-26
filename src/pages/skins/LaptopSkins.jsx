@@ -53,21 +53,21 @@ const LaptopSkins = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 px-4 py-12">
+    <div className="min-h-screen bg-gray-50 px-2 sm:px-4 py-12 sm:py-12">
       {/* Breadcrumb */}
-      <div className="flex items-center text-sm text-gray-500 mb-6">
+      <div className="flex items-center text-xs sm:text-sm text-gray-500 mb-4 sm:mb-6">
         <span>Home</span>
-        <span className="mx-2">/</span>
+        <span className="mx-1 sm:mx-2">/</span>
         <span className="text-gray-900">Build Your Laptop And iPad Skins</span>
       </div>
 
       <div className="max-w-6xl mx-auto">
         <div className="grid lg:grid-cols-2 gap-8">
           {/* Product Preview */}
-          <div className="bg-gray-200 rounded-2xl p-8 flex items-center justify-center min-h-[400px] lg:min-h-[600px]">
+          <div className="bg-gray-200 rounded-xl sm:rounded-2xl p-4 sm:p-8 flex items-center justify-center min-h-[280px] sm:min-h-[400px] lg:min-h-[600px]">
             <div className="relative">
               {/* Laptop mockup */}
-              <div className="w-80 h-60 bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl p-2 shadow-2xl transform rotate-12">
+              <div className="w-64 sm:w-80 h-48 sm:h-60 bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl sm:rounded-2xl p-2 shadow-2xl transform rotate-12">
                 {/* Screen */}
                 <div className="w-full h-full bg-black rounded-xl relative overflow-hidden">
                   {/* Laptop skin pattern */}
@@ -111,9 +111,9 @@ const LaptopSkins = () => {
               </div>
 
               {/* Search icon */}
-              <button className="absolute -top-4 -left-4 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center">
+              <button className="absolute -top-3 sm:-top-4 -left-3 sm:-left-4 w-8 sm:w-10 h-8 sm:h-10 bg-white rounded-full shadow-lg flex items-center justify-center">
                 <svg
-                  className="w-5 h-5 text-gray-600"
+                  className="w-4 sm:w-5 h-4 sm:h-5 text-gray-600"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -130,10 +130,10 @@ const LaptopSkins = () => {
           </div>
 
           {/* Configuration Panel */}
-          <div className="space-y-8">
+          <div className="space-y-6 sm:space-y-8">
             {/* Device Selection */}
             <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">
+              <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">
                 Select Your Device
               </h2>
 
@@ -173,16 +173,16 @@ const LaptopSkins = () => {
 
             {/* Design Selection */}
             <div>
-              <h3 className="text-xl font-bold text-gray-900 mb-4">
+              <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-3 sm:mb-4">
                 Choose Your Design
               </h3>
 
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-4">
                 {designs.map((design, index) => (
                   <button
                     key={design.id}
                     onClick={() => setSelectedDesign(index)}
-                    className={`aspect-[4/3] rounded-xl overflow-hidden border-2 transition-all ${
+                    className={`aspect-[4/3] rounded-lg sm:rounded-xl overflow-hidden border-2 transition-all ${
                       selectedDesign === index
                         ? "border-blue-500 ring-2 ring-blue-200"
                         : "border-gray-200 hover:border-gray-300"
@@ -190,9 +190,9 @@ const LaptopSkins = () => {
                   >
                     <div className="w-full h-full relative">
                       {/* Laptop shape preview */}
-                      <div className="w-full h-full bg-gray-100 p-2">
+                      <div className="w-full h-full bg-gray-100 p-1 sm:p-2">
                         <div
-                          className={`w-full h-full rounded-lg ${design.color} relative overflow-hidden`}
+                          className={`w-full h-full rounded-md sm:rounded-lg ${design.color} relative overflow-hidden`}
                           style={{
                             backgroundImage:
                               design.pattern === "fluid"
@@ -220,8 +220,8 @@ const LaptopSkins = () => {
                       </div>
 
                       {/* Design name */}
-                      <div className="absolute bottom-1 left-1 right-1">
-                        <p className="text-xs font-medium text-gray-700 text-center bg-white bg-opacity-80 rounded px-1 py-0.5">
+                      <div className="absolute bottom-0.5 sm:bottom-1 left-0.5 sm:left-1 right-0.5 sm:right-1">
+                        <p className="text-[10px] sm:text-xs font-medium text-gray-700 text-center bg-white bg-opacity-80 rounded px-0.5 sm:px-1 py-0.5">
                           {design.name}
                         </p>
                       </div>
@@ -232,13 +232,13 @@ const LaptopSkins = () => {
             </div>
 
             {/* Add to Cart Button */}
-            <button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-6 rounded-xl transition-colors">
+            <button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 sm:py-4 px-4 sm:px-6 rounded-lg sm:rounded-xl transition-colors text-sm sm:text-base">
               Add to Cart
             </button>
           </div>
         </div>
       </div>
-      <Maintenance/>
+      <Maintenance />
     </div>
   );
 };
