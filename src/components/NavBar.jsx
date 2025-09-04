@@ -151,23 +151,24 @@ const NavBar = () => {
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-
-      // Simple logic:
-      // - Show navbar when scrolling UP or at the top
-      // - Hide navbar when scrolling DOWN (after some threshold)
-
-      if (currentScrollY < 50) {
-        // Always show at the very top
+      const viewportHeight = window.innerHeight;
+      
+      // Only show navbar when at the very top (first viewport height)
+      const isAtTop = currentScrollY < 100; // 100px threshold from top
+      
+      // Update visibility based on scroll position
+      if (isAtTop) {
+        // Show when at the top
         setIsVisible(true);
-      } else if (currentScrollY < lastScrollY) {
-        // Scrolling UP - show navbar
-        setIsVisible(true);
-      } else if (currentScrollY > lastScrollY && currentScrollY > 100) {
-        // Scrolling DOWN and past threshold - hide navbar
+      } else if (currentScrollY > viewportHeight) {
+        // Hide when scrolled past first viewport height
         setIsVisible(false);
       }
-
-      setLastScrollY(currentScrollY);
+      
+      // Only update lastScrollY when not at the very top
+      if (currentScrollY > 100) {
+        setLastScrollY(currentScrollY);
+      }
     };
 
     // Throttle scroll events for better performance
